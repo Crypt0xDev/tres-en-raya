@@ -37,7 +37,7 @@ jobs:
       - name: Run pip-audit (Dependency Vulnerability Scanner)
         run: |
           pip-audit --format=json --output=pip-audit-report.json || true
-          pip-audit --format=text
+          pip-audit
 
       - name: Run Safety (Python Security Scanner)
         run: |

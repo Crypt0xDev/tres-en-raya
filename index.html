@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tres en Raya</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Tres en Raya</h1>
+        </header>
+        <main>
+            <div id="game-container">
+                <div id="game-info">
+                    <p id="current-player">Turno de: Jugador X</p>
+                    <p id="game-status"></p>
+                </div>
+                
+                <div id="game-board" class="board">
+                    <div class="cell" data-index="0"></div>
+                    <div class="cell" data-index="1"></div>
+                    <div class="cell" data-index="2"></div>
+                    <div class="cell" data-index="3"></div>
+                    <div class="cell" data-index="4"></div>
+                    <div class="cell" data-index="5"></div>
+                    <div class="cell" data-index="6"></div>
+                    <div class="cell" data-index="7"></div>
+                    <div class="cell" data-index="8"></div>
+                </div>
+                
+                <div class="game-controls">
+                    <button id="reset-btn">Nuevo Juego</button>
+                </div>
+            </div>
+            
+            <!-- Sección de información adicional -->
+            <div class="info-section">
+                <button id="toggle-info" class="info-toggle">ℹ️ Información del Proyecto</button>
+                <div id="info-content" class="info-content hidden">
+                    <h2>Cómo jugar</h2>
+                    <p>Haz clic en las casillas para colocar tu marca (X u O). El primer jugador en conseguir tres marcas en línea (horizontal, vertical o diagonal) gana el juego.</p>
+                    
+                    <h2>Descargar y ejecutar localmente</h2>
+                    <p>Puedes descargar el código completo y ejecutar todas las versiones del juego:</p>
+                    <ul>
+                        <li><strong>Versión Web (Flask):</strong> Servidor completo con multijugador</li>
+                        <li><strong>Versión Terminal:</strong> Para jugar en consola</li>
+                        <li><strong>Versión Multijugador:</strong> Con sockets en tiempo real</li>
+                    </ul>
+                    
+                    <div class="download-options">
+                        <a href="https://github.com/Crypt0xDev/tres-en-raya/archive/refs/heads/main.zip" 
+                           class="download-btn" target="_blank">📥 Descargar ZIP</a>
+                        <a href="https://github.com/Crypt0xDev/tres-en-raya" 
+                           class="github-btn" target="_blank">👨‍💻 Ver en GitHub</a>
+                    </div>
+                    
+                    <h3>Instalación local:</h3>
+                    <div class="code-block">
+                        <code>
+git clone https://github.com/Crypt0xDev/tres-en-raya.git<br>
+cd tres-en-raya<br>
+pip install -r requirements.txt<br>
+python -m src.web.app
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>

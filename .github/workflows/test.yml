@@ -30,12 +30,21 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
 
-      - name: 🧪 Run tests with coverage
+      - name: 🔍 Verify installation
         run: |
-          python -m pytest tests/ -v --cov=src --cov-report=xml
+          python -c "import sys; print('Python version:', sys.version)"
+          python -c "import pytest; print('Pytest version:', pytest.__version__)"
+          python -c "import src.core.board; print('Core imports: OK')"
+
+      - name: 🧪 Run tests with coverage
+        env:
+          PYTHONPATH: ${{ github.workspace }}/src:${{ github.workspace }}
+        run: |
+          cd ${{ github.workspace }}
+          python -m pytest tests/ -v --cov=src --cov-report=xml --cov-report=term-missing
 
       - name: 📊 Upload coverage to Codecov
-        if: matrix.python-version == 3.11
+        if: matrix.python-version == '3.11'
         uses: codecov/codecov-action@v4
         with:
           file: ./coverage.xml

@@ -1,0 +1,272 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ecf0f1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(44, 62, 80, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+}
+
+.header {
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    background: linear-gradient(45deg, #f39c12, #e74c3c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Game Board Styles */
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(52, 73, 94, 0.8);
+    border-radius: 15px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.cell {
+    aspect-ratio: 1;
+    background: rgba(236, 240, 241, 0.1);
+    border: 2px solid rgba(149, 165, 166, 0.3);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #ecf0f1;
+    min-height: 80px;
+}
+
+.cell:hover {
+    background: rgba(52, 152, 219, 0.3);
+    border-color: #3498db;
+    transform: scale(1.05);
+}
+
+.cell.filled {
+    cursor: not-allowed;
+    background: rgba(46, 204, 113, 0.2);
+}
+
+/* Game Info Styles */
+#game-info {
+    margin: 20px 0;
+    font-size: 1.1rem;
+}
+
+#current-player {
+    color: #f39c12;
+    font-weight: bold;
+}
+
+#game-status {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Button Styles */
+.modo-selector {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.modo-btn, .back-btn, #reset-btn {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.modo-btn:hover, .back-btn:hover, #reset-btn:hover {
+    background: linear-gradient(45deg, #2980b9, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+.game-controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
+    }
+
+  to {
+    text-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
+  }
+}
+
+.modo-selector {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.modo-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(52, 73, 94, 0.8);
+  color: #ecf0f1;
+}
+
+.modo-btn.active {
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  transform: scale(1.05);
+}
+
+.modo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.game-info {
+  background: rgba(52, 73, 94, 0.8);
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.turno-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.turno {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e74c3c;
+  transition: color 0.3s ease;
+}
+
+.turno.jugador-o {
+  color: #3498db;
+}
+
+.modo-juego {
+  font-size: 1rem;
+  color: #bdc3c7;
+}
+
+.cuenta-regresiva {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #f39c12;
+  min-height: 25px;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.game-board {
+  margin: 30px 0;
+}
+
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(52, 73, 94, 0.5);
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.casilla {
+  width: 80px;
+  height: 80px;
+  background: rgba(236, 240, 241, 0.95);
+  border: 3px solid #34495e;
+  border-radius: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.casilla::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}

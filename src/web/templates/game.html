@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tres en Raya - Juego</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Tres en Raya</h1>
+            <p>Modo: {{ mode|default('Local') }}</p>
+        </header>
+        <main>
+            <div id="game-container">
+                <div id="game-info">
+                    <p id="current-player">Turno de: Jugador X</p>
+                    <p id="game-status"></p>
+                </div>
+                
+                <div id="game-board" class="board">
+                    {% for i in range(9) %}
+                    <div class="cell" data-index="{{ i }}" onclick="makeMove({{ i }})"></div>
+                    {% endfor %}
+                </div>
+                
+                <div class="game-controls">
+                    <button id="reset-btn" onclick="resetGame()">Nuevo Juego</button>
+                    <a href="{{ url_for('index') }}" class="back-btn">Volver al Menú</a>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        const gameMode = '{{ mode|default("local") }}';
+    </script>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>

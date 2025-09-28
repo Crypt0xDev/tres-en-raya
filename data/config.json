@@ -1,0 +1,20 @@
+{
+  "game_title": "Tres en Raya",
+  "version": "1.0",
+  "max_players": 2,
+  "board_size": 3,
+  "win_condition": "3 in a row",
+  "default_player_names": [
+    "Jugador 1",
+    "Jugador 2"
+  ],
+  "game_modes": [
+    "local",
+    "multiplayer"
+  ],
+  "settings": {
+    "enable_sound": true,
+    "enable_timer": false,
+    "timer_duration": 30
+  }
+}

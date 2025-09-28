@@ -25,11 +25,11 @@ function initializeGame() {
   const cells = document.querySelectorAll(".cell");
   const resetButton = document.getElementById("reset-btn");
   const toggleInfoButton = document.getElementById("toggle-info");
-  
+
   // Mode selection buttons
   const pvpModeBtn = document.getElementById("pvp-mode");
   const aiModeBtn = document.getElementById("ai-mode");
-  
+
   // Difficulty buttons
   const easyBtn = document.getElementById("easy-btn");
   const mediumBtn = document.getElementById("medium-btn");
@@ -54,7 +54,7 @@ function initializeGame() {
   if (pvpModeBtn) {
     pvpModeBtn.addEventListener("click", () => setGameMode("pvp"));
   }
-  
+
   if (aiModeBtn) {
     aiModeBtn.addEventListener("click", () => setGameMode("ai"));
   }
@@ -63,11 +63,11 @@ function initializeGame() {
   if (easyBtn) {
     easyBtn.addEventListener("click", () => setAiDifficulty("easy"));
   }
-  
+
   if (mediumBtn) {
     mediumBtn.addEventListener("click", () => setAiDifficulty("medium"));
   }
-  
+
   if (hardBtn) {
     hardBtn.addEventListener("click", () => setAiDifficulty("hard"));
   }
@@ -101,7 +101,7 @@ function makeMove(position) {
   if (gameMode === "ai" && currentPlayer === "O" && gameActive) {
     isAiThinking = true;
     updateDisplay();
-    
+
     // Add delay for better UX
     setTimeout(() => {
       makeAiMove();
@@ -158,8 +158,8 @@ function updateDisplay() {
     } else {
       const difficultyText = {
         easy: "Fácil",
-        medium: "Medio", 
-        hard: "Difícil"
+        medium: "Medio",
+        hard: "Difícil",
       };
       modeDisplay.textContent = `Modo: Jugador vs IA (${difficultyText[aiDifficulty]})`;
     }
@@ -168,9 +168,13 @@ function updateDisplay() {
   if (playerDisplay) {
     if (gameMode === "ai") {
       if (currentPlayer === "X") {
-        playerDisplay.textContent = isAiThinking ? "IA está pensando..." : "Tu turno (X)";
+        playerDisplay.textContent = isAiThinking
+          ? "IA está pensando..."
+          : "Tu turno (X)";
       } else {
-        playerDisplay.textContent = isAiThinking ? "IA está pensando..." : "Turno de la IA (O)";
+        playerDisplay.textContent = isAiThinking
+          ? "IA está pensando..."
+          : "Turno de la IA (O)";
       }
     } else {
       playerDisplay.textContent = `Turno de: Jugador ${currentPlayer}`;
@@ -277,12 +281,12 @@ function toggleInfo() {
 
 function setGameMode(mode) {
   gameMode = mode;
-  
+
   // Update button states
   const pvpBtn = document.getElementById("pvp-mode");
   const aiBtn = document.getElementById("ai-mode");
   const difficultySelector = document.getElementById("ai-difficulty");
-  
+
   if (mode === "pvp") {
     pvpBtn.classList.add("active");
     aiBtn.classList.remove("active");
@@ -292,20 +296,20 @@ function setGameMode(mode) {
     pvpBtn.classList.remove("active");
     difficultySelector.classList.remove("hidden");
   }
-  
+
   resetGame();
 }
 
 function setAiDifficulty(difficulty) {
   aiDifficulty = difficulty;
-  
+
   // Update difficulty button states
-  document.querySelectorAll(".difficulty-btn").forEach(btn => {
+  document.querySelectorAll(".difficulty-btn").forEach((btn) => {
     btn.classList.remove("active");
   });
-  
+
   document.getElementById(`${difficulty}-btn`).classList.add("active");
-  
+
   if (gameMode === "ai") {
     updateDisplay();
   }
@@ -319,7 +323,7 @@ function makeAiMove() {
   }
 
   let position;
-  
+
   switch (aiDifficulty) {
     case "easy":
       position = getEasyMove();
@@ -352,11 +356,11 @@ function makeAiMove() {
 function getEasyMove() {
   // Easy: Random move
   const availableMoves = gameState
-    .map((cell, index) => cell === "" ? index : null)
-    .filter(val => val !== null);
-    
+    .map((cell, index) => (cell === "" ? index : null))
+    .filter((val) => val !== null);
+
   if (availableMoves.length === 0) return -1;
-  
+
   return availableMoves[Math.floor(Math.random() * availableMoves.length)];
 }
 
@@ -377,21 +381,21 @@ function getHardMove() {
 
 function minimax(board, depth, isMaximizing) {
   const winner = checkWinnerForBoard(board);
-  
+
   if (winner === "O") return { score: 10 - depth };
   if (winner === "X") return { score: depth - 10 };
-  if (board.every(cell => cell !== "")) return { score: 0 };
+  if (board.every((cell) => cell !== "")) return { score: 0 };
 
   if (isMaximizing) {
     let bestScore = -Infinity;
     let bestMove = { index: -1, score: bestScore };
-    
+
     for (let i = 0; i < 9; i++) {
       if (board[i] === "") {
         board[i] = "O";
         const score = minimax(board, depth + 1, false);
         board[i] = "";
-        
+
         if (score.score > bestScore) {
           bestScore = score.score;
           bestMove = { index: i, score: bestScore };
@@ -402,13 +406,13 @@ function minimax(board, depth, isMaximizing) {
   } else {
     let bestScore = Infinity;
     let bestMove = { index: -1, score: bestScore };
-    
+
     for (let i = 0; i < 9; i++) {
       if (board[i] === "") {
         board[i] = "X";
         const score = minimax(board, depth + 1, true);
         board[i] = "";
-        
+
         if (score.score < bestScore) {
           bestScore = score.score;
           bestMove = { index: i, score: bestScore };

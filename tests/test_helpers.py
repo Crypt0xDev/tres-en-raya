@@ -248,7 +248,7 @@ if __name__ == "__main__":
     class TestHelpers(unittest.TestCase):
         def test_basic_functionality(self):
             """Test basic helper functions work correctly"""
-            from utils.helpers import calculate_winner, is_board_full, reset_board
+            from src.utils.helpers import calculate_winner, is_board_full, reset_board
             
             # Test reset_board
             board = reset_board(3)

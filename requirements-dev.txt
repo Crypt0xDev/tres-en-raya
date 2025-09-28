@@ -7,17 +7,17 @@
 -r requirements-prod.txt
 
 # Testing Framework
-pytest>=7.4.0
-pytest-cov>=4.1.0
+pytest>=8.0.0
+pytest-cov>=5.0.0
 
 # Code Quality y Linting
-flake8>=6.0.0
-black>=23.0.0
+flake8>=7.0.0
+black>=24.0.0
 
 # Security Scanning
-pip-audit>=2.6.0
-safety>=2.3.0
-bandit>=1.7.0
+pip-audit>=2.7.0
+safety>=3.0.0
+bandit>=1.8.0
 
 # Development Tools (opcional)
 # pre-commit>=3.0.0

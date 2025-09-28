@@ -1,29 +1,39 @@
-from flask import Flask, render_template, request, jsonify
-from .routes.game_routes import game_routes
-from .routes.api_routes import api_routes
+from flask import Flask, render_template
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from routes.game_routes import game_routes
+from routes.api_routes import api_routes
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'tres-en-raya-secret-key'
+app.config["SECRET_KEY"] = "tres-en-raya-secret-key"
 
 # Register blueprints for routes
-app.register_blueprint(game_routes, url_prefix='/game')
-app.register_blueprint(api_routes, url_prefix='/api')
+app.register_blueprint(game_routes, url_prefix="/game")
+app.register_blueprint(api_routes, url_prefix="/api")
 
-@app.route('/')
+
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
-@app.route('/local')
+
+@app.route("/local")
 def local_game():
-    return render_template('game.html', mode='local')
+    return render_template("game.html", mode="local")
 
-@app.route('/multiplayer')
+
+@app.route("/multiplayer")
 def multiplayer_game():
-    return render_template('game.html', mode='multiplayer')
+    return render_template("game.html", mode="multiplayer")
+
 
 def run():
     """Function to run the web app (used by setup.py entry point)"""
     app.run(debug=True)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run(debug=True)

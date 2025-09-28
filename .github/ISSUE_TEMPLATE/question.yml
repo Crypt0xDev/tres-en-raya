@@ -1,0 +1,53 @@
+name: ❓ Question
+description: Hacer una pregunta sobre el proyecto
+title: "[QUESTION] "
+labels: ["question"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Hola! ¿Tienes alguna pregunta sobre el proyecto? Estamos aquí para ayudarte.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: ❓ Tu Pregunta
+      description: ¿Qué te gustaría saber?
+      placeholder: "Ejemplo: ¿Cómo puedo ejecutar el juego en modo desarrollo?"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 🏷️ Categoría
+      description: ¿Sobre qué aspecto del proyecto es tu pregunta?
+      options:
+        - 🚀 Instalación y Setup
+        - 🎮 Cómo usar el juego
+        - 💻 Desarrollo y Código
+        - 🤖 Funcionamiento de la IA
+        - 🌐 Despliegue y GitHub Pages
+        - 🔧 Configuración
+        - 📚 Documentación
+        - 🤝 Contribuciones
+        - 🐛 Troubleshooting
+        - 🎯 Otro
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 📋 Contexto Adicional
+      description: Cualquier información adicional que pueda ayudar a responder tu pregunta
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: ✅ Confirmación
+      options:
+        - label: He revisado la documentación (README.md) antes de hacer esta pregunta
+          required: true
+        - label: He buscado en los issues existentes para ver si esta pregunta ya fue respondida
+          required: true

@@ -1,0 +1,87 @@
+name: ✨ Feature Request
+description: Sugerir una nueva característica para el juego
+title: "[FEATURE] "
+labels: ["enhancement", "feature-request"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Gracias por tu sugerencia! Las nuevas ideas son siempre bienvenidas.
+
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: ✨ Descripción de la Característica
+      description: Describe la característica que te gustaría ver
+      placeholder: "Ejemplo: Añadir un modo de juego en tiempo real para múltiples jugadores online"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem-solution
+    attributes:
+      label: 🎯 Problema que Resuelve
+      description: ¿Qué problema resolvería esta característica?
+      placeholder: "Actualmente no hay forma de jugar con amigos que estén en otras ubicaciones"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: 💡 Solución Propuesta
+      description: ¿Cómo te imaginas que funcionaría esta característica?
+      placeholder: "Se podría crear salas de juego con códigos únicos que los jugadores pueden compartir"
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 📊 Prioridad
+      description: ¿Qué tan importante consideras esta característica?
+      options:
+        - 🔥 Crítica - Muy importante
+        - ⚡ Alta - Sería muy útil
+        - 📝 Media - Estaría bien tenerla
+        - 💡 Baja - Sería un extra agradable
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 🏷️ Categoría
+      description: ¿A qué área del juego pertenece esta característica?
+      options:
+        - 🎮 Gameplay - Mecánicas del juego
+        - 🎨 UI/UX - Interfaz de usuario
+        - 🤖 IA - Inteligencia Artificial
+        - 🌐 Multiplayer - Multijugador
+        - 📱 Mobile - Compatibilidad móvil
+        - 🔧 Performance - Rendimiento
+        - 📊 Analytics - Estadísticas
+        - 🎵 Audio - Sonidos y música
+        - 🌈 Themes - Temas visuales
+        - 🔒 Security - Seguridad
+        - 📖 Documentation - Documentación
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 🔄 Alternativas Consideradas
+      description: ¿Has pensado en otras formas de lograr esto?
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📋 Información Adicional
+      description: Cualquier otra información, mockups, enlaces, etc.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: ✅ Confirmación
+      options:
+        - label: He buscado en los issues existentes para asegurarme de que esta característica no ha sido solicitada antes
+          required: true
+        - label: Esta característica beneficiaría a múltiples usuarios, no solo a mí
+          required: true

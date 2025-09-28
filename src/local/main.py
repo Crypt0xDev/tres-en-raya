@@ -1,6 +1,12 @@
 # main.py
 
-from .game_logic import start_game
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from game_logic import start_game
+
 
 def main():
     """Función principal para ejecutar el juego local"""
@@ -11,13 +17,14 @@ def main():
     print("4 | 5 | 6")
     print("---------")
     print("7 | 8 | 9\n")
-    
+
     while True:
         start_game()
         play_again = input("¿Quieres jugar otra vez? (s/n): ").lower()
-        if play_again not in ['s', 'si', 'sí', 'y', 'yes']:
+        if play_again not in ["s", "si", "sí", "y", "yes"]:
             print("¡Gracias por jugar!")
             break
+
 
 if __name__ == "__main__":
     main()

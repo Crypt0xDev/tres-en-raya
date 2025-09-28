@@ -1,0 +1,96 @@
+name: 🐛 Bug Report
+description: Reportar un error o problema en el juego
+title: "[BUG] "
+labels: ["bug", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Gracias por reportar este bug! Por favor, completa la información solicitada para ayudarnos a solucionarlo.
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: 🐛 Descripción del Bug
+      description: Describe claramente el problema que encontraste
+      placeholder: "Ejemplo: El juego se congela cuando selecciono el modo IA en dificultad difícil"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: 🔄 Pasos para Reproducir
+      description: Describe paso a paso cómo reproducir el error
+      placeholder: |
+        1. Abro el juego en el navegador
+        2. Selecciono modo "Jugador vs IA" 
+        3. Cambio dificultad a "Difícil"
+        4. Hago clic en una casilla
+        5. El juego se congela
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: ✅ Comportamiento Esperado
+      description: ¿Qué esperabas que pasara?
+      placeholder: "La IA debería hacer su movimiento después de mi turno"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: version
+    attributes:
+      label: 🌐 Versión
+      description: ¿En qué versión del juego ocurre el problema?
+      options:
+        - GitHub Pages (sitio web)
+        - Flask (servidor local)
+        - Terminal/Consola
+        - No estoy seguro
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: 🌍 Navegador
+      description: ¿En qué navegador ocurre el problema?
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Opera
+        - Otro
+
+  - type: textarea
+    id: system-info
+    attributes:
+      label: 💻 Información del Sistema
+      description: Sistema operativo y otros detalles relevantes
+      placeholder: |
+        - OS: Windows 11
+        - Python: 3.11
+        - Resolución: 1920x1080
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📋 Información Adicional
+      description: Cualquier otra información que pueda ser útil (capturas, logs, etc.)
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: ✅ Confirmación
+      options:
+        - label: He buscado en los issues existentes y no encontré un reporte similar
+          required: true
+        - label: He probado en la última versión del proyecto
+          required: true

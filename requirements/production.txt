@@ -1,0 +1,21 @@
+# ===================================
+# DEPENDENCIAS MÍNIMAS DE PRODUCCIÓN
+# ===================================
+# Solo las dependencias esenciales para ejecutar la aplicación en producción
+
+# Framework Web Principal
+Flask>=3.1.0
+Werkzeug>=3.0.6
+MarkupSafe>=2.1.0
+
+# Funcionalidad Multiplayer (WebSockets)
+Flask-SocketIO>=5.4.0
+python-socketio>=5.11.0
+
+# Comunicaciones HTTP (si necesario)
+requests>=2.32.0
+urllib3>=2.2.0
+idna>=3.7
+
+# Validación y Esquemas
+jsonschema>=4.23.0

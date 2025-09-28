@@ -1,11 +1,7 @@
-from flask import Flask, render_template
-import sys
 import os
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from routes.game_routes import game_routes
-from routes.api_routes import api_routes
+from flask import Flask, render_template
+from .routes.game_routes import game_routes
+from .routes.api_routes import api_routes
 
 app = Flask(__name__)
 # Use environment variable for security, fallback only for development

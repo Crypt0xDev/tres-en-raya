@@ -13,9 +13,9 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'tres-en-raya-local=local.main:main',
-            'tres-en-raya-web=web.app:run',
-            'tres-en-raya-multiplayer=multiplayer.server:main',
+            'tres-en-raya-cli=src.interfaces.cli.main:main',
+            'tres-en-raya-web=src.interfaces.web.app:run',
+            'tres-en-raya-multiplayer=src.multiplayer.server:main',
         ],
     },
     include_package_data=True,

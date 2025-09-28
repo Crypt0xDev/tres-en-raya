@@ -1,0 +1,28 @@
+# ===================================
+# DEPENDENCIAS DE PRODUCCIÓN
+# ===================================
+
+# Framework Web Principal
+Flask>=3.1.0
+Werkzeug>=3.0.6
+MarkupSafe>=2.1.0
+
+# Funcionalidad Multiplayer (WebSockets)
+Flask-SocketIO>=5.4.0
+python-socketio>=5.11.0
+
+# Comunicaciones HTTP
+requests>=2.32.0
+urllib3>=2.2.0
+idna>=3.7
+
+# Validación y Esquemas
+jsonschema>=4.23.0
+
+# ===================================
+# DEPENDENCIAS DE DESARROLLO
+# ===================================
+
+# Testing Framework
+pytest>=7.4.0
+pytest-cov>=4.1.0

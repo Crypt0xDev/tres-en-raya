@@ -1,0 +1,24 @@
+# ===================================
+# DEPENDENCIAS DE DESARROLLO Y TESTING
+# ===================================
+# Incluye todas las dependencias de producción + herramientas de desarrollo
+
+# Incluir dependencias de producción
+-r requirements-prod.txt
+
+# Testing Framework
+pytest>=8.0.0
+pytest-cov>=5.0.0
+
+# Code Quality y Linting
+flake8>=7.0.0
+black>=24.0.0
+
+# Security Scanning
+pip-audit>=2.7.0
+safety>=3.0.0
+bandit>=1.8.0
+
+# Development Tools (opcional)
+# pre-commit>=3.0.0
+# mypy>=1.0.0

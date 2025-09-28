@@ -1,12 +1,12 @@
-import sys
 import os
-
-# Add project root to path
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
+import sys
 
 from src.core.board import Board
 from src.core.player import Player
 from .ui.console_ui import ConsoleUI
+
+# Add project root to path
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../.."))
 
 
 def start_game():

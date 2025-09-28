@@ -1,12 +1,11 @@
 # main.py
 
-import sys
 import os
+import sys
+from .game_logic import start_game
 
 # Add current directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-from .game_logic import start_game
 
 
 def main():

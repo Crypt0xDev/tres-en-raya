@@ -1,9 +1,14 @@
-class GameEngine:
-    def __init__(self):
-        self.games = {}
-        self.game_counter = 0
+from typing import Any, Dict, Optional
 
-    def start_game(self, player1_name=None, player2_name=None):
+
+class GameEngine:
+    def __init__(self) -> None:
+        self.games: Dict[str, Dict[str, Any]] = {}
+        self.game_counter: int = 0
+
+    def start_game(
+        self, player1_name: Optional[str] = None, player2_name: Optional[str] = None
+    ) -> str:
         from .board import Board
         from .player import Player
 
@@ -25,7 +30,7 @@ class GameEngine:
 
         return game_id
 
-    def get_game_status(self, game_id):
+    def get_game_status(self, game_id: str) -> Dict[str, Any]:
         if game_id not in self.games:
             return {"error": "Game not found"}
 
@@ -37,7 +42,9 @@ class GameEngine:
             "winner": game["winner"],
         }
 
-    def make_move(self, game_id, player_name, position):
+    def make_move(
+        self, game_id: str, player_name: str, position: int
+    ) -> Dict[str, Any]:
         if game_id not in self.games:
             return {"error": "Game not found"}
 
@@ -68,7 +75,7 @@ class GameEngine:
         else:
             return {"error": "Invalid move"}
 
-    def end_game(self, game_id):
+    def end_game(self, game_id: str) -> Dict[str, Any]:
         if game_id in self.games:
             del self.games[game_id]
             return {"success": True}

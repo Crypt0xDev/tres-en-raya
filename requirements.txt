@@ -3,26 +3,31 @@
 # ===================================
 
 # Framework Web Principal
-Flask>=3.1.0
-Werkzeug>=3.0.6
-MarkupSafe>=2.1.0
+Flask>=3.1.0,<4.0.0
+Werkzeug>=3.0.6,<4.0.0
+MarkupSafe>=2.1.0,<3.0.0
 
 # Funcionalidad Multiplayer (WebSockets)
-Flask-SocketIO>=5.4.0
-python-socketio>=5.11.0
+Flask-SocketIO>=5.4.0,<6.0.0
+python-socketio>=5.11.0,<6.0.0
 
 # Comunicaciones HTTP
-requests>=2.32.0
-urllib3>=2.2.0
-idna>=3.7
+requests>=2.32.0,<3.0.0
+urllib3>=2.2.0,<3.0.0
+idna>=3.7,<4.0.0
+certifi>=2024.2.2
 
 # Validación y Esquemas
-jsonschema>=4.23.0
+jsonschema>=4.23.0,<5.0.0
+
+# Rate Limiting
+Flask-Limiter>=3.8.0,<4.0.0
 
 # ===================================
 # DEPENDENCIAS DE DESARROLLO
 # ===================================
 
 # Testing Framework
-pytest>=7.4.0
-pytest-cov>=4.1.0
+pytest>=8.4.0,<9.0.0
+pytest-cov>=6.0.0,<7.0.0
+pytest-asyncio>=0.24.0,<1.0.0

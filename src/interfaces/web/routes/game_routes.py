@@ -1,12 +1,13 @@
-from flask import Blueprint, render_template, request, jsonify
-import sys
 import os
+import sys
 
+from flask import Blueprint, jsonify, request
+from core.game_engine import GameEngine
+
+# Add project root to path
 sys.path.append(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 )
-
-from core.game_engine import GameEngine
 
 game_routes = Blueprint("game_routes", __name__)
 game_engine = GameEngine()

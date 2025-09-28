@@ -4,10 +4,10 @@ import sys
 import os
 
 # Add src directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from multiplayer.client import MultiplayerClient
-from core.game_engine import GameEngine
+from src.multiplayer.client import MultiplayerClient
+from src.core.game_engine import GameEngine
 
 class MultiplayerTestCase(unittest.TestCase):
     def setUp(self):

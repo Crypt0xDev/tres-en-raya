@@ -3,9 +3,10 @@
 import sys
 import os
 
+# Add current directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from game_logic import start_game
+from .game_logic import start_game
 
 
 def main():

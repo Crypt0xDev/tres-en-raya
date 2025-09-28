@@ -3,11 +3,11 @@ import sys
 import os
 
 # Add src directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from core.board import Board
-from core.player import Player
-from local import game_logic
+from src.core.board import Board
+from src.core.player import Player
+from src.interfaces.cli import game_logic
 
 class TestGameLogic(unittest.TestCase):
 

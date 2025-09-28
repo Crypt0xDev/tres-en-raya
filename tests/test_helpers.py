@@ -5,10 +5,10 @@ import sys
 import os
 
 # Add src directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 import pytest
-from utils.helpers import calculate_winner, is_board_full, reset_board
+from src.utils.helpers import calculate_winner, is_board_full, reset_board
 
 
 class TestCalculateWinner:

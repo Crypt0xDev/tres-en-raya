@@ -8,7 +8,8 @@ from routes.game_routes import game_routes
 from routes.api_routes import api_routes
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "tres-en-raya-secret-key"
+# Use environment variable for security, fallback only for development
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-change-in-production")
 
 # Register blueprints for routes
 app.register_blueprint(game_routes, url_prefix="/game")

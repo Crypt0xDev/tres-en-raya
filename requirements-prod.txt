@@ -1,6 +1,7 @@
 # ===================================
-# DEPENDENCIAS DE PRODUCCIÓN
+# DEPENDENCIAS MÍNIMAS DE PRODUCCIÓN
 # ===================================
+# Solo las dependencias esenciales para ejecutar la aplicación en producción
 
 # Framework Web Principal
 Flask>=2.3.0
@@ -11,18 +12,10 @@ MarkupSafe>=2.1.0
 Flask-SocketIO>=5.3.0
 python-socketio>=5.10.0
 
-# Comunicaciones HTTP
+# Comunicaciones HTTP (si necesario)
 requests>=2.32.5
 urllib3>=2.5.0
 idna>=3.7
 
 # Validación y Esquemas
 jsonschema>=4.20.0
-
-# ===================================
-# DEPENDENCIAS DE DESARROLLO
-# ===================================
-
-# Testing Framework
-pytest>=7.4.0
-pytest-cov>=4.1.0

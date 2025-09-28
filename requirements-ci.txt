@@ -1,0 +1,21 @@
+# ===================================
+# DEPENDENCIAS PARA GITHUB ACTIONS CI/CD
+# ===================================
+# Solo las dependencias necesarias para testing y security en CI/CD
+
+# Testing básico
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Security scanning
+pip-audit>=2.6.0
+safety>=2.3.0
+bandit>=1.7.0
+
+# Code quality
+flake8>=6.0.0
+black>=23.0.0
+
+# Dependencias mínimas para importar módulos en tests
+Flask>=2.3.0
+jsonschema>=4.20.0

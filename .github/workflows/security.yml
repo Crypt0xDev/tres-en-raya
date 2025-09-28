@@ -1,0 +1,110 @@
+name: Security Audit
+
+on:
+  schedule:
+    # Run security audit daily at 2 AM UTC
+    - cron: "0 2 * * *"
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  security-audit:
+    name: Security Vulnerability Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-ci.txt
+
+      - name: Run pip-audit (Dependency Vulnerability Scanner)
+        run: |
+          pip-audit --format=json --output=pip-audit-report.json || true
+          pip-audit --format=text
+
+      - name: Run Safety (Python Security Scanner)
+        run: |
+          safety check --json --output=safety-report.json || true
+          safety check
+
+      - name: Run Bandit (Code Security Scanner)
+        run: |
+          bandit -r src/ -f json -o bandit-report.json || true
+          bandit -r src/ -ll
+
+      - name: Upload Security Reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-reports
+          path: |
+            pip-audit-report.json
+            safety-report.json
+            bandit-report.json
+          retention-days: 30
+
+      - name: Comment PR with Security Summary
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            let comment = '## 🔒 Security Audit Results\n\n';
+
+            try {
+              // Try to read and summarize security reports
+              comment += '✅ Security scan completed. Check the uploaded artifacts for detailed reports.\n';
+              comment += '- **pip-audit**: Dependency vulnerability scan\n';
+              comment += '- **safety**: Python package security check\n';
+              comment += '- **bandit**: Code security analysis\n\n';
+              comment += '⚠️ Review any reported vulnerabilities before merging.';
+            } catch (error) {
+              comment += '❌ Unable to parse security report results.';
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  codeql:
+    name: CodeQL Security Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: python, javascript
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2

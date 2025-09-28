@@ -33,8 +33,14 @@ def multiplayer_game():
 
 def run():
     """Function to run the web app (used by setup.py entry point)"""
-    app.run(debug=True)
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
+    host = os.getenv('FLASK_HOST', '127.0.0.1')
+    port = int(os.getenv('FLASK_PORT', '5000'))
+    app.run(debug=debug_mode, host=host, port=port)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1']
+    host = os.getenv('FLASK_HOST', '127.0.0.1')
+    port = int(os.getenv('FLASK_PORT', '5000'))
+    app.run(debug=debug_mode, host=host, port=port)

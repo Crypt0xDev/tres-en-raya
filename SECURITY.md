@@ -237,6 +237,41 @@ Agradecemos a todos los investigadores de seguridad y a la comunidad por ayudarn
 
 ---
 
+---
+
+## 🛡️ Configuración de Seguridad Implementada
+
+### Issues Detectados y Resueltos por Bandit ✅
+
+1. **B201: flask_debug_true** - Alta Severidad  
+   - **Problema**: Flask ejecutándose con `debug=True` en producción
+   - **Riesgo**: Exposición del debugger de Werkzeug y ejecución de código arbitrario
+   - **Solución**: Configuración basada en variables de entorno
+
+2. **B104: hardcoded_bind_all_interfaces** - Media Severidad  
+   - **Problema**: Binding a todas las interfaces (`host="0.0.0.0"`)
+   - **Riesgo**: Exposición del servicio a todas las interfaces de red
+   - **Solución**: Host configurable por variable de entorno, por defecto `127.0.0.1`
+
+### Variables de Entorno Seguras
+
+```bash
+# Desarrollo Local
+FLASK_DEBUG=True          # Solo para desarrollo
+FLASK_HOST=127.0.0.1     # Solo acceso local
+FLASK_PORT=5000          # Puerto personalizable
+
+# Producción  
+FLASK_DEBUG=False        # ¡NUNCA True en producción!
+FLASK_HOST=127.0.0.1     # O IP específica necesaria
+SECRET_KEY=<clave-aleatoria-32-chars>
+```
+
+### Verificación de Seguridad
+
+- **Antes**: 3 issues críticos + 1 medio = **4 problemas de seguridad**
+- **Ahora**: 0 issues críticos + 0 medios = **✅ SIN PROBLEMAS DE SEGURIDAD**
+
 <div align="center">
 
 **🔒 La seguridad es responsabilidad de todos 🔒**

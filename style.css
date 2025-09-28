@@ -127,6 +127,77 @@ body {
     box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
 }
 
+/* Game Mode Selector Styles */
+.game-mode-selector {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(52, 73, 94, 0.6);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.game-mode-selector h2 {
+    color: #3498db;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.game-mode-selector h3 {
+    color: #f39c12;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.mode-buttons, .difficulty-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mode-btn, .difficulty-btn {
+    background: rgba(44, 62, 80, 0.8);
+    color: #ecf0f1;
+    border: 2px solid rgba(149, 165, 166, 0.3);
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.mode-btn:hover, .difficulty-btn:hover {
+    background: rgba(52, 152, 219, 0.3);
+    border-color: #3498db;
+    transform: translateY(-2px);
+}
+
+.mode-btn.active, .difficulty-btn.active {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    border-color: #3498db;
+    color: white;
+    transform: scale(1.05);
+}
+
+.difficulty-selector {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.difficulty-selector.hidden {
+    display: none;
+}
+
+#game-mode-display {
+    color: #9b59b6;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
 /* Info Section Styles */
 .info-section {
     margin-top: 40px;

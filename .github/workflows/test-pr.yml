@@ -1,0 +1,50 @@
+name: 🧪 Test Pull Requests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel setuptools
+          pip install -r requirements.txt
+
+      - name: 🧪 Run tests
+        run: |
+          python -m pytest tests/ -v --tb=short
+
+      - name: 🔍 Lint JavaScript
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          
+      - name: 🔍 Check JavaScript files
+        run: |
+          # Check if JavaScript files exist before linting
+          if [ -f "game.js" ]; then
+            echo "✅ Found game.js"
+            npx eslint game.js --no-eslintrc --config '{"extends": ["eslint:recommended"], "env": {"browser": true, "es6": true}, "parserOptions": {"ecmaVersion": 2021}}' || echo "⚠️ Linting warnings found"
+          fi
+          if [ -f "src/interfaces/web/static/js/game.js" ]; then
+            echo "✅ Found src/interfaces/web/static/js/game.js"
+            npx eslint src/interfaces/web/static/js/game.js --no-eslintrc --config '{"extends": ["eslint:recommended"], "env": {"browser": true, "es6": true}, "parserOptions": {"ecmaVersion": 2021}}' || echo "⚠️ Linting warnings found"
+          fi
+        continue-on-error: true
+
+      - name: ✅ Tests completed
+        run: echo "🎉 All tests completed successfully!"

@@ -82,5 +82,18 @@ yarn-error.log*
 *.temp
 .cache/
 
+# GitHub Pages build artifacts
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Deployment artifacts
+*.artifact
+github-pages-*/
+
 # Game data (optional - you might want to keep config files)
 # data/scores.json
+
+# Logs
+*.log
+logs/

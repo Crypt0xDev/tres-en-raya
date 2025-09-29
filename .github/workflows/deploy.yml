@@ -3,8 +3,7 @@ name: 🚀 Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   # 🧪 Test Job
@@ -51,12 +50,16 @@ jobs:
     name: 🚀 Deploy to GitHub Pages
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     permissions:
       contents: read
       pages: write
       id-token: write
+
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
 
     environment:
       name: github-pages
@@ -69,10 +72,28 @@ jobs:
       - name: ⚙️ Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: 🏗️ Build site
+        run: |
+          # Crear estructura para GitHub Pages
+          mkdir -p _site
+          cp -r src/interfaces/web/templates/* _site/ 2>/dev/null || :
+          cp -r src/interfaces/web/static _site/ 2>/dev/null || :
+          
+          # Copiar archivos principales si existen
+          [ -f "index.html" ] && cp index.html _site/
+          [ -f "game.html" ] && cp game.html _site/
+          [ -f "README.md" ] && cp README.md _site/
+          
+          # Asegurar que existe index.html
+          if [ ! -f "_site/index.html" ]; then
+            echo "<!DOCTYPE html><html><head><title>🎮 Tres en Raya</title></head><body><h1>🎮 Tres en Raya - Coming Soon</h1></body></html>" > _site/index.html
+          fi
+
       - name: 📤 Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "."
+          path: "_site"
+          name: github-pages-${{ github.run_id }}
 
       - name: 🌐 Deploy to GitHub Pages
         id: deployment

@@ -9,7 +9,6 @@ include:
 
 # Excluir archivos innecesarios para el sitio web
 exclude:
-  - src/
   - tests/
   - scripts/
   - requirements*.txt
@@ -29,12 +28,19 @@ exclude:
   - test_*.py
   - play_*.py
   - run_*.py
+  - tic_tac_toe_game/
+  - config/development.py
+  - config/production.py
 
 # Configuración del sitio
-title: "Tres en Raya - Juego Interactivo"
-description: "Juego completo de Tres en Raya implementado con tecnología moderna y mejores prácticas de desarrollo"
+title: "🎮 Tres en Raya"
+description: "Juego moderno de Tres en Raya con sistema de usuarios, IA avanzada y rankings"
 url: "https://crypt0xdev.github.io"
 baseurl: "/tres-en-raya"
+
+# Archivos estáticos para GitHub Pages
+static_files:
+  - src/interfaces/web/static/*
 
 # Configuración del tema
 theme: minima

@@ -40,8 +40,8 @@ jobs:
           if [ -f "game.js" ]; then
             npx eslint game.js --no-eslintrc --config '{"extends": ["eslint:recommended"], "env": {"browser": true, "es6": true}, "parserOptions": {"ecmaVersion": 2021}}'
           fi
-          if [ -f "src/web/static/js/game.js" ]; then
-            npx eslint src/web/static/js/game.js --no-eslintrc --config '{"extends": ["eslint:recommended"], "env": {"browser": true, "es6": true}, "parserOptions": {"ecmaVersion": 2021}}'
+          if [ -f "src/interfaces/web/static/js/game.js" ]; then
+            npx eslint src/interfaces/web/static/js/game.js --no-eslintrc --config '{"extends": ["eslint:recommended"], "env": {"browser": true, "es6": true}, "parserOptions": {"ecmaVersion": 2021}}'
           fi
         continue-on-error: true
 
@@ -76,18 +76,54 @@ jobs:
         run: |
           # Crear estructura para GitHub Pages
           mkdir -p _site
-          cp -r src/interfaces/web/templates/* _site/ 2>/dev/null || :
-          cp -r src/interfaces/web/static _site/ 2>/dev/null || :
           
-          # Copiar archivos principales si existen
-          [ -f "index.html" ] && cp index.html _site/
-          [ -f "game.html" ] && cp game.html _site/
+          # Usar la página de aterrizaje optimizada para GitHub Pages
+          if [ -f "github-pages-index.html" ]; then
+            cp github-pages-index.html _site/index.html
+          elif [ -f "index.html" ]; then
+            cp index.html _site/
+          else
+            # Copiar desde templates como fallback
+            cp src/interfaces/web/templates/index.html _site/ 2>/dev/null || :
+          fi
+          
+          # Copiar también la aplicación completa
+          mkdir -p _site/app
+          cp src/interfaces/web/templates/index.html _site/app/index.html 2>/dev/null || :
+          
+          # Copiar todos los archivos estáticos necesarios
+          mkdir -p _site/static
+          cp -r src/interfaces/web/static/* _site/static/ 2>/dev/null || :
+          
+          # Copiar archivos adicionales
           [ -f "README.md" ] && cp README.md _site/
+          [ -f "_config.yml" ] && cp _config.yml _site/
+          
+          # Crear estructura de URLs amigables
+          mkdir -p _site/game
+          [ -f "src/interfaces/web/templates/game.html" ] && cp src/interfaces/web/templates/game.html _site/game/index.html
           
           # Asegurar que existe index.html
           if [ ! -f "_site/index.html" ]; then
-            echo "<!DOCTYPE html><html><head><title>🎮 Tres en Raya</title></head><body><h1>🎮 Tres en Raya - Coming Soon</h1></body></html>" > _site/index.html
+            echo '<!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>🎮 Tres en Raya</title>
+                <meta http-equiv="refresh" content="0; url=./static/">
+            </head>
+            <body>
+                <h1>🎮 Tres en Raya</h1>
+                <p>Redirigiendo...</p>
+                <script>window.location.href = "./static/";</script>
+            </body>
+            </html>' > _site/index.html
           fi
+          
+          # Listar archivos creados para debug
+          echo "📁 Estructura creada:"
+          find _site -type f | head -20
 
       - name: 📤 Upload artifact
         uses: actions/upload-pages-artifact@v3

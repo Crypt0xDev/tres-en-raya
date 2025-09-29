@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-          
+
       - name: 🔍 Check JavaScript files
         run: |
           # Check if JavaScript files exist before linting

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎮 Tres en Raya</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="./static/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
+    <meta name="description" content="Juego moderno de Tres en Raya con sistema de usuarios, IA avanzada y rankings">
 </head>
 <body>
     <!-- Controles de música -->
@@ -15,7 +17,7 @@
     
     <!-- Audio de fondo -->
     <audio id="background-music" loop autoplay>
-        <source src="{{ url_for('static', filename='music/musica_fondo.mp3') }}" type="audio/mpeg">
+        <source src="./static/music/musica_fondo.mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
@@ -33,7 +35,7 @@
             </div>
             
             <header class="main-header">
-                <div class="header-icon">�</div>
+                <div class="header-icon">🎮</div>
                 <h1 class="main-title">🎮 Tres en Raya</h1>
                 <p class="subtitle">¡El juego clásico que nunca pasa de moda!</p>
             </header>
@@ -56,7 +58,7 @@
                     </div>
                     
                     <div class="mode-card disabled" data-mode="online">
-                        <div class="mode-icon">🚧</div>
+                        <div class="mode-icon">🌐</div>
                         <h3 class="mode-title">ONLINE</h3>
                         <p class="mode-subtitle">En Desarrollo</p>
                         <div class="mode-description">🔒 Próximamente disponible</div>
@@ -77,17 +79,17 @@
                 <h3>Selecciona la Dificultad:</h3>
                 <div class="difficulty-grid">
                     <div class="difficulty-card" data-difficulty="easy">
-                        <div class="difficulty-icon">😊</div>
+                        <div class="difficulty-icon">😌</div>
                         <h4>FÁCIL</h4>
                         <p>Movimientos aleatorios</p>
                     </div>
                     <div class="difficulty-card" data-difficulty="medium">
-                        <div class="difficulty-icon">😐</div>
+                        <div class="difficulty-icon">🤔</div>
                         <h4>MEDIO</h4>
                         <p>Estrategia mixta</p>
                     </div>
                     <div class="difficulty-card" data-difficulty="hard">
-                        <div class="difficulty-icon">😈</div>
+                        <div class="difficulty-icon">🤖</div>
                         <h4>DIFÍCIL</h4>
                         <p>IA perfecta</p>
                     </div>
@@ -289,7 +291,7 @@
                 <button class="back-btn" id="back-to-menu">←</button>
                 <div class="game-info">
                     <div class="player-indicator">
-                        <span class="player-badge" id="current-player-badge">ALEXIS</span>
+                        <span class="player-badge" id="current-player-badge">JUGADOR</span>
                         <div class="turn-text" id="turn-text">Turno del Jugador X</div>
                     </div>
                 </div>
@@ -320,7 +322,7 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+    <script src="./static/js/game.js"></script>
     <script>
         // Control de música de fondo
         document.addEventListener('DOMContentLoaded', function() {
@@ -335,10 +337,10 @@
             toggleBtn.addEventListener('click', function() {
                 if (audio.paused) {
                     audio.play();
-                    toggleBtn.textContent = '🎵 Pausar';
+                    toggleBtn.textContent = '⏸️ Pausar';
                 } else {
                     audio.pause();
-                    toggleBtn.textContent = '🎵 Reproducir';
+                    toggleBtn.textContent = '▶️ Reproducir';
                 }
             });
             
@@ -349,7 +351,7 @@
             
             // Manejar autoplay
             audio.play().catch(function() {
-                toggleBtn.textContent = '🎵 Reproducir';
+                toggleBtn.textContent = '▶️ Reproducir';
             });
         });
     </script>

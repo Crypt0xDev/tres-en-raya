@@ -35,19 +35,10 @@ jobs:
           rm -rf _site
           mkdir -p _site
           
-          # Copiar página principal
-          if [ -f "github-pages-index.html" ]; then
-            cp github-pages-index.html _site/index.html
-            echo "✅ Landing page copied"
-          else
-            echo "❌ Landing page not found"
-            exit 1
-          fi
-          
-          # Copiar aplicación completa
+          # Copiar juego como página principal (sin landing page)
           if [ -f "app-github-pages.html" ]; then
-            mkdir -p _site/app
-            cp app-github-pages.html _site/app/index.html
+            cp app-github-pages.html _site/index.html
+            echo "✅ Game app copied as main page"
             echo "✅ App copied"
           else
             echo "❌ App file not found"

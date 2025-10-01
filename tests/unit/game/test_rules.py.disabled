@@ -21,7 +21,7 @@ class TestGameRulesEngine(unittest.TestCase):
     
     def setUp(self):
         """Configuración antes de cada test."""
-        self.rules_engine = GameRulesEngine()
+        self.rules_engine = GameRules()
         self.board = Board()
         
         self.player1 = Player("Jugador 1", PlayerType.HUMAN)
@@ -430,9 +430,9 @@ class TestRulesIntegration(unittest.TestCase):
     
     def setUp(self):
         """Configuración antes de cada test."""
-        self.rules_engine = GameRulesEngine()
-        self.victory_checker = VictoryConditionsChecker()
-        self.ai_strategy = AIStrategyRules()
+        self.rules_engine = GameRules()
+        self.victory_checker = VictoryConditions()
+        self.ai_strategy = AIStrategyFactory()
         
         self.board = Board()
     

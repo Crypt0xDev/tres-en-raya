@@ -9,11 +9,10 @@ import unittest
 from unittest.mock import Mock, patch, MagicMock
 import json
 
-# Imports del dominio
-from game.entities import (
-    GameSession, GameState, Player, PlayerType, PlayerSymbol,
-    Board, Position, Move, CellState
-)
+# Imports del dominio (conftest.py maneja el path)
+from game.entities.game_session import GameSession, GameState  
+from game.entities.player import Player, PlayerType, PlayerSymbol
+from game.entities.board import Board, Position, Move, CellState
 
 
 class TestWebAdapter(unittest.TestCase):
@@ -27,7 +26,7 @@ class TestWebAdapter(unittest.TestCase):
         self.mock_check_winner = Mock()
         
         # Crear instancia mock del adaptador web
-        from delivery_mechanisms.web.flask_web_adapter import FlaskWebAdapter
+        from delivery_mechanisms.web_ui.flask_adapter import FlaskWebAdapter
         self.web_adapter = FlaskWebAdapter(
             start_new_game_use_case=self.mock_start_new_game,
             make_move_use_case=self.mock_make_move,
@@ -156,7 +155,7 @@ class TestConsoleAdapter(unittest.TestCase):
         self.mock_make_move = Mock()
         self.mock_check_winner = Mock()
         
-        from delivery_mechanisms.console.cli_adapter import CLIAdapter
+        from delivery_mechanisms.console_ui.cli_adapter import CLIAdapter
         self.cli_adapter = CLIAdapter(
             start_new_game_use_case=self.mock_start_new_game,
             make_move_use_case=self.mock_make_move,

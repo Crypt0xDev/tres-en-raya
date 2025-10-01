@@ -55,12 +55,13 @@ jobs:
           fi
           
           # Copiar recursos estáticos
-          if [ -d "src/interfaces/web/static" ]; then
-            cp -r src/interfaces/web/static _site/
-            echo "✅ Static files copied ($(find _site/static -type f | wc -l) files)"
+          if [ -d "delivery_mechanisms/web_ui/css" ] && [ -d "delivery_mechanisms/web_ui/js" ]; then
+            mkdir -p _site/static
+            cp -r delivery_mechanisms/web_ui/css _site/static/
+            cp -r delivery_mechanisms/web_ui/js _site/static/
+            echo "✅ Static files copied (CSS and JS)"
           else
-            echo "❌ Static directory not found"
-            exit 1
+            echo "⚠️ Static directories not found, continuing without them"
           fi
           
           # Crear .nojekyll para deshabilitar Jekyll

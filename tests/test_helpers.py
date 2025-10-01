@@ -1,208 +1,173 @@
 """
-Tests for utils/helpers.py
+Tests para funciones auxiliares del dominio Tres en Raya.
+Actualizado para Screaming Architecture.
 """
 
 import os
 import sys
+import unittest
+from pathlib import Path
 
-# Add src directory to path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+# Add project root to path for Screaming Architecture imports
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
 
-import pytest
-
-from src.utils.helpers import calculate_winner, is_board_full, reset_board
+from game.entities.board import Board, Position, Move, CellState
 
 
-class TestCalculateWinner:
-    """Test calculate_winner function"""
+class TestBoardHelpers(unittest.TestCase):
+    """Tests para funciones auxiliares del tablero."""
 
     def test_winner_row_first_row(self):
-        """Test winner in first row"""
-        board = [["X", "X", "X"], ["O", "O", ""], ["", "", ""]]
-        assert calculate_winner(board) == "X"
-
-    def test_winner_row_middle_row(self):
-        """Test winner in middle row"""
-        board = [["X", "O", "X"], ["O", "O", "O"], ["X", "", ""]]
-        assert calculate_winner(board) == "O"
-
-    def test_winner_row_last_row(self):
-        """Test winner in last row"""
-        board = [["X", "O", ""], ["O", "X", ""], ["O", "O", "O"]]
-        assert calculate_winner(board) == "O"
+        """Test ganador en primera fila"""
+        board = Board()
+        # Crear línea horizontal X X X en primera fila
+        for col in range(3):
+            position = Position(0, col)
+            move = Move(position, CellState.PLAYER_X)
+            board.place_move(move)
+        
+        winner = board.get_winner()
+        self.assertEqual(winner, CellState.PLAYER_X)
 
     def test_winner_column_first_column(self):
-        """Test winner in first column"""
-        board = [["X", "O", "O"], ["X", "O", ""], ["X", "", ""]]
-        assert calculate_winner(board) == "X"
-
-    def test_winner_column_middle_column(self):
-        """Test winner in middle column"""
-        board = [["O", "X", "O"], ["", "X", ""], ["", "X", ""]]
-        assert calculate_winner(board) == "X"
-
-    def test_winner_column_last_column(self):
-        """Test winner in last column"""
-        board = [["O", "", "X"], ["", "O", "X"], ["", "", "X"]]
-        assert calculate_winner(board) == "X"
+        """Test ganador en primera columna"""
+        board = Board()
+        # Crear línea vertical O O O en primera columna
+        for row in range(3):
+            position = Position(row, 0)
+            move = Move(position, CellState.PLAYER_O)
+            board.place_move(move)
+        
+        winner = board.get_winner()
+        self.assertEqual(winner, CellState.PLAYER_O)
 
     def test_winner_main_diagonal(self):
-        """Test winner in main diagonal (top-left to bottom-right)"""
-        board = [["X", "O", "O"], ["O", "X", ""], ["", "", "X"]]
-        assert calculate_winner(board) == "X"
+        """Test ganador en diagonal principal"""
+        board = Board()
+        # Crear línea diagonal X X X
+        for i in range(3):
+            position = Position(i, i)
+            move = Move(position, CellState.PLAYER_X)
+            board.place_move(move)
+        
+        winner = board.get_winner()
+        self.assertEqual(winner, CellState.PLAYER_X)
 
     def test_winner_anti_diagonal(self):
-        """Test winner in anti-diagonal (top-right to bottom-left)"""
-        board = [["O", "", "X"], ["", "X", "O"], ["X", "", ""]]
-        assert calculate_winner(board) == "X"
+        """Test ganador en diagonal secundaria"""
+        board = Board()
+        # Crear línea diagonal O O O (anti-diagonal)
+        positions = [(0, 2), (1, 1), (2, 0)]
+        for row, col in positions:
+            position = Position(row, col)
+            move = Move(position, CellState.PLAYER_O)
+            board.place_move(move)
+        
+        winner = board.get_winner()
+        self.assertEqual(winner, CellState.PLAYER_O)
 
-    def test_no_winner(self):
-        """Test no winner scenario"""
-        board = [["X", "O", "X"], ["O", "X", "O"], ["O", "X", "O"]]
-        assert calculate_winner(board) is None
+    def test_no_winner_empty_board(self):
+        """Test sin ganador en tablero vacío"""
+        board = Board()
+        winner = board.get_winner()
+        self.assertIsNone(winner)
 
-    def test_empty_board(self):
-        """Test empty board has no winner"""
-        board = [["", "", ""], ["", "", ""], ["", "", ""]]
-        assert calculate_winner(board) is None
+    def test_no_winner_incomplete_game(self):
+        """Test sin ganador en juego incompleto"""
+        board = Board()
+        moves = [(0, 0, CellState.PLAYER_X), (0, 1, CellState.PLAYER_O), (1, 1, CellState.PLAYER_X)]
+        
+        for row, col, player in moves:
+            position = Position(row, col)
+            move = Move(position, player)
+            board.place_move(move)
+        
+        winner = board.get_winner()
+        self.assertIsNone(winner)
 
-    def test_partial_board(self):
-        """Test partially filled board with no winner"""
-        board = [["X", "", "O"], ["", "X", ""], ["", "", ""]]
-        assert calculate_winner(board) is None
-
-    def test_larger_board_4x4_row_winner(self):
-        """Test winner in 4x4 board - row"""
-        board = [
-            ["X", "X", "X", "X"],
-            ["O", "O", "", ""],
-            ["", "", "", ""],
-            ["", "", "", ""],
+    def test_board_full_detection(self):
+        """Test detección de tablero lleno"""
+        board = Board()
+        
+        # Llenar tablero completamente sin ganador: X O X / O X O / O X O
+        moves = [
+            (0, 0, CellState.PLAYER_X), (0, 1, CellState.PLAYER_O), (0, 2, CellState.PLAYER_X),
+            (1, 0, CellState.PLAYER_O), (1, 1, CellState.PLAYER_X), (1, 2, CellState.PLAYER_O),
+            (2, 0, CellState.PLAYER_O), (2, 1, CellState.PLAYER_X), (2, 2, CellState.PLAYER_O)
         ]
-        assert calculate_winner(board) == "X"
+        
+        for row, col, player in moves:
+            position = Position(row, col)
+            move = Move(position, player)
+            board.place_move(move)
+        
+        self.assertTrue(board.is_full())
+        self.assertIsNone(board.get_winner())  # No hay ganador - empate
 
-    def test_larger_board_4x4_diagonal_winner(self):
-        """Test winner in 4x4 board - diagonal"""
-        board = [
-            ["O", "", "", ""],
-            ["", "O", "", ""],
-            ["", "", "O", ""],
-            ["", "", "", "O"],
-        ]
-        assert calculate_winner(board) == "O"
+    def test_board_not_full_partially_filled(self):
+        """Test tablero no lleno cuando está parcialmente lleno"""
+        board = Board()
+        
+        # Colocar algunos movimientos pero no llenar
+        moves = [(0, 0, CellState.PLAYER_X), (0, 1, CellState.PLAYER_O)]
+        for row, col, player in moves:
+            position = Position(row, col)
+            move = Move(position, player)
+            board.place_move(move)
+        
+        self.assertFalse(board.is_full())
 
+    def test_invalid_move_occupied_position(self):
+        """Test movimiento inválido en posición ocupada"""
+        board = Board()
+        
+        # Colocar primer movimiento
+        position = Position(0, 0)
+        move1 = Move(position, CellState.PLAYER_X)
+        result1 = board.place_move(move1)
+        self.assertTrue(result1)
+        
+        # Intentar colocar en la misma posición
+        move2 = Move(position, CellState.PLAYER_O)
+        result2 = board.place_move(move2)
+        self.assertFalse(result2)
 
-class TestIsBoardFull:
-    """Test is_board_full function"""
+    def test_position_validation(self):
+        """Test validación de posiciones"""
+        board = Board()
+        
+        # Posición válida
+        valid_position = Position(1, 1)
+        self.assertTrue(board.is_position_empty(valid_position))
+        
+        # Colocar movimiento y verificar que ya no está vacía
+        move = Move(valid_position, CellState.PLAYER_X)
+        board.place_move(move)
+        self.assertFalse(board.is_position_empty(valid_position))
 
-    def test_empty_board_not_full(self):
-        """Test empty board is not full"""
-        board = [["", "", ""], ["", "", ""], ["", "", ""]]
-        assert is_board_full(board) is False
-
-    def test_partially_filled_board_not_full(self):
-        """Test partially filled board is not full"""
-        board = [["X", "O", ""], ["", "X", "O"], ["O", "", "X"]]
-        assert is_board_full(board) is False
-
-    def test_full_board(self):
-        """Test completely filled board is full"""
-        board = [["X", "O", "X"], ["O", "X", "O"], ["O", "X", "O"]]
-        assert is_board_full(board) is True
-
-    def test_single_empty_cell_not_full(self):
-        """Test board with single empty cell is not full"""
-        board = [["X", "O", "X"], ["O", "X", "O"], ["O", "X", ""]]
-        assert is_board_full(board) is False
-
-    def test_larger_board_4x4_full(self):
-        """Test 4x4 full board"""
-        board = [
-            ["X", "O", "X", "O"],
-            ["O", "X", "O", "X"],
-            ["X", "O", "X", "O"],
-            ["O", "X", "O", "X"],
-        ]
-        assert is_board_full(board) is True
-
-    def test_larger_board_4x4_not_full(self):
-        """Test 4x4 not full board"""
-        board = [
-            ["X", "O", "X", ""],
-            ["O", "X", "O", "X"],
-            ["X", "O", "X", "O"],
-            ["O", "X", "O", "X"],
-        ]
-        assert is_board_full(board) is False
-
-
-class TestResetBoard:
-    """Test reset_board function"""
-
-    def test_reset_3x3_board(self):
-        """Test creating 3x3 empty board"""
-        board = reset_board(3)
-        expected = [["", "", ""], ["", "", ""], ["", "", ""]]
-        assert board == expected
-        assert len(board) == 3
-        assert all(len(row) == 3 for row in board)
-        assert all(cell == "" for row in board for cell in row)
-
-    def test_reset_4x4_board(self):
-        """Test creating 4x4 empty board"""
-        board = reset_board(4)
-        assert len(board) == 4
-        assert all(len(row) == 4 for row in board)
-        assert all(cell == "" for row in board for cell in row)
-
-    def test_reset_1x1_board(self):
-        """Test creating 1x1 empty board"""
-        board = reset_board(1)
-        expected = [[""]]
-        assert board == expected
-
-    def test_reset_5x5_board(self):
-        """Test creating 5x5 empty board"""
-        board = reset_board(5)
-        assert len(board) == 5
-        assert all(len(row) == 5 for row in board)
-        assert all(cell == "" for row in board for cell in row)
-
-    def test_board_independence(self):
-        """Test that modifying one row doesn't affect others"""
-        board = reset_board(3)
-        board[0][0] = "X"
-        assert board[0][0] == "X"
-        assert board[0][1] == ""
-        assert board[1][0] == ""
-        assert board[2][2] == ""
+    def test_board_state_consistency(self):
+        """Test consistencia del estado del tablero"""
+        board = Board()
+        
+        # Estado inicial - todas las celdas vacías
+        for row in range(board.size):
+            for col in range(board.size):
+                position = Position(row, col)
+                self.assertEqual(board.get_cell_state(position), CellState.EMPTY)
+        
+        # Después de movimientos
+        position = Position(1, 1)
+        move = Move(position, CellState.PLAYER_X)
+        board.place_move(move)
+        
+        # Verificar que solo esa celda cambió
+        self.assertEqual(board.get_cell_state(position), CellState.PLAYER_X)
+        
+        # Otras celdas siguen vacías
+        other_position = Position(0, 0)
+        self.assertEqual(board.get_cell_state(other_position), CellState.EMPTY)
 
 
 if __name__ == "__main__":
-    # Simple test runner without pytest dependency issues
-    import unittest
-
-    # Convert pytest tests to unittest format for direct running
-    class TestHelpers(unittest.TestCase):
-        def test_basic_functionality(self):
-            """Test basic helper functions work correctly"""
-            from src.utils.helpers import calculate_winner, is_board_full, reset_board
-
-            # Test reset_board
-            board = reset_board(3)
-            self.assertEqual(len(board), 3)
-            self.assertTrue(all(len(row) == 3 for row in board))
-
-            # Test is_board_full
-            self.assertFalse(is_board_full(board))
-
-            # Test calculate_winner
-            self.assertIsNone(calculate_winner(board))
-
-            # Test winner detection
-            winning_board = [["X", "X", "X"], ["O", "O", ""], ["", "", ""]]
-            self.assertEqual(calculate_winner(winning_board), "X")
-
-            print("✅ All helper function tests passed!")
-
     unittest.main()

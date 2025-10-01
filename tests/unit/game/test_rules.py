@@ -1,0 +1,503 @@
+"""
+Tests unitarios para las reglas del dominio del juego Tres en Raya.
+
+Estos tests verifican el comportamiento de las reglas de negocio
+del dominio siguiendo los principios de Screaming Architecture.
+"""
+
+import unittest
+
+# Imports del dominio
+from game.entities import (
+    Board, Position, Move, CellState,
+    Player, PlayerType, PlayerSymbol,
+    GameSession, GameState, GameConfiguration
+)
+from game.rules.game_rules import GameRulesEngine
+from game.rules.victory_conditions import VictoryConditionsChecker
+from game.rules.ai_strategy import AIStrategyRules
+
+
+class TestGameRulesEngine(unittest.TestCase):
+    """Tests para el motor de reglas del juego."""
+    
+    def setUp(self):
+        """Configuración antes de cada test."""
+        self.rules_engine = GameRulesEngine()
+        self.board = Board()
+        
+        self.player1 = Player("Jugador 1", PlayerType.HUMAN)
+        self.player1.assign_symbol(PlayerSymbol.X)
+        
+        self.player2 = Player("Jugador 2", PlayerType.HUMAN)
+        self.player2.assign_symbol(PlayerSymbol.O)
+    
+    def test_validate_move_valid(self):
+        """Test de validación de movimiento válido."""
+        position = Position(1, 1)
+        move = Move(position, CellState.PLAYER_X)
+        
+        is_valid, error_message = self.rules_engine.validate_move(
+            board=self.board,
+            move=move,
+            current_player=self.player1
+        )
+        
+        self.assertTrue(is_valid)
+        self.assertIsNone(error_message)
+    
+    def test_validate_move_position_occupied(self):
+        """Test de validación de movimiento en posición ocupada."""
+        position = Position(0, 0)
+        
+        # Colocar primer movimiento
+        first_move = Move(position, CellState.PLAYER_X)
+        self.board.place_move(first_move)
+        
+        # Intentar colocar segundo movimiento en la misma posición
+        second_move = Move(position, CellState.PLAYER_O)
+        
+        is_valid, error_message = self.rules_engine.validate_move(
+            board=self.board,
+            move=second_move,
+            current_player=self.player2
+        )
+        
+        self.assertFalse(is_valid)
+        self.assertIsNotNone(error_message)
+        self.assertIn("ocupada", error_message.lower())
+    
+    def test_validate_move_wrong_player_symbol(self):
+        """Test de validación cuando el símbolo no coincide con el jugador."""
+        position = Position(1, 1)
+        move = Move(position, CellState.PLAYER_O)  # Símbolo O
+        
+        # Pero el turno es del jugador X
+        is_valid, error_message = self.rules_engine.validate_move(
+            board=self.board,
+            move=move,
+            current_player=self.player1  # Jugador X
+        )
+        
+        self.assertFalse(is_valid)
+        self.assertIsNotNone(error_message)
+    
+    def test_validate_move_invalid_position(self):
+        """Test de validación de posición fuera del tablero."""
+        invalid_positions = [
+            Position(-1, 0),   # Fila negativa
+            Position(0, -1),   # Columna negativa
+            Position(3, 0),    # Fila fuera del rango
+            Position(0, 3),    # Columna fuera del rango
+        ]
+        
+        for position in invalid_positions:
+            move = Move(position, CellState.PLAYER_X)
+            
+            is_valid, error_message = self.rules_engine.validate_move(
+                board=self.board,
+                move=move,
+                current_player=self.player1
+            )
+            
+            self.assertFalse(is_valid)
+            self.assertIsNotNone(error_message)
+    
+    def test_can_game_continue_empty_board(self):
+        """Test si el juego puede continuar con tablero vacío."""
+        can_continue = self.rules_engine.can_game_continue(self.board)
+        self.assertTrue(can_continue)
+    
+    def test_can_game_continue_with_winner(self):
+        """Test si el juego puede continuar cuando hay ganador."""
+        # Crear línea ganadora
+        winning_moves = [
+            Move(Position(0, 0), CellState.PLAYER_X),
+            Move(Position(0, 1), CellState.PLAYER_X),
+            Move(Position(0, 2), CellState.PLAYER_X)
+        ]
+        
+        for move in winning_moves:
+            self.board.place_move(move)
+        
+        can_continue = self.rules_engine.can_game_continue(self.board)
+        self.assertFalse(can_continue)
+    
+    def test_can_game_continue_board_full(self):
+        """Test si el juego puede continuar con tablero lleno (empate)."""
+        # Llenar tablero sin ganador
+        moves = [
+            (Position(0, 0), CellState.PLAYER_X),
+            (Position(0, 1), CellState.PLAYER_O),
+            (Position(0, 2), CellState.PLAYER_X),
+            (Position(1, 0), CellState.PLAYER_O),
+            (Position(1, 1), CellState.PLAYER_O),
+            (Position(1, 2), CellState.PLAYER_X),
+            (Position(2, 0), CellState.PLAYER_X),
+            (Position(2, 1), CellState.PLAYER_X),
+            (Position(2, 2), CellState.PLAYER_O)
+        ]
+        
+        for position, player in moves:
+            self.board.place_move(Move(position, player))
+        
+        can_continue = self.rules_engine.can_game_continue(self.board)
+        self.assertFalse(can_continue)
+
+
+class TestVictoryConditionsChecker(unittest.TestCase):
+    """Tests para el verificador de condiciones de victoria."""
+    
+    def setUp(self):
+        """Configuración antes de cada test."""
+        self.checker = VictoryConditionsChecker()
+        self.board = Board()
+    
+    def test_check_horizontal_victory_top_row(self):
+        """Test de victoria horizontal en fila superior."""
+        moves = [
+            Move(Position(0, 0), CellState.PLAYER_X),
+            Move(Position(0, 1), CellState.PLAYER_X),
+            Move(Position(0, 2), CellState.PLAYER_X)
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        winner = self.checker.check_victory_conditions(self.board)
+        self.assertEqual(winner, CellState.PLAYER_X)
+    
+    def test_check_horizontal_victory_middle_row(self):
+        """Test de victoria horizontal en fila del medio."""
+        moves = [
+            Move(Position(1, 0), CellState.PLAYER_O),
+            Move(Position(1, 1), CellState.PLAYER_O),
+            Move(Position(1, 2), CellState.PLAYER_O)
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        winner = self.checker.check_victory_conditions(self.board)
+        self.assertEqual(winner, CellState.PLAYER_O)
+    
+    def test_check_vertical_victory_left_column(self):
+        """Test de victoria vertical en columna izquierda."""
+        moves = [
+            Move(Position(0, 0), CellState.PLAYER_X),
+            Move(Position(1, 0), CellState.PLAYER_X),
+            Move(Position(2, 0), CellState.PLAYER_X)
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        winner = self.checker.check_victory_conditions(self.board)
+        self.assertEqual(winner, CellState.PLAYER_X)
+    
+    def test_check_diagonal_victory_main_diagonal(self):
+        """Test de victoria en diagonal principal."""
+        moves = [
+            Move(Position(0, 0), CellState.PLAYER_O),
+            Move(Position(1, 1), CellState.PLAYER_O),
+            Move(Position(2, 2), CellState.PLAYER_O)
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        winner = self.checker.check_victory_conditions(self.board)
+        self.assertEqual(winner, CellState.PLAYER_O)
+    
+    def test_check_diagonal_victory_anti_diagonal(self):
+        """Test de victoria en diagonal secundaria."""
+        moves = [
+            Move(Position(0, 2), CellState.PLAYER_X),
+            Move(Position(1, 1), CellState.PLAYER_X),
+            Move(Position(2, 0), CellState.PLAYER_X)
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        winner = self.checker.check_victory_conditions(self.board)
+        self.assertEqual(winner, CellState.PLAYER_X)
+    
+    def test_check_no_victory_empty_board(self):
+        """Test de no victoria en tablero vacío."""
+        winner = self.checker.check_victory_conditions(self.board)
+        self.assertIsNone(winner)
+    
+    def test_check_no_victory_incomplete_lines(self):
+        """Test de no victoria con líneas incompletas."""
+        moves = [
+            Move(Position(0, 0), CellState.PLAYER_X),
+            Move(Position(0, 1), CellState.PLAYER_X),
+            Move(Position(1, 0), CellState.PLAYER_O),
+            Move(Position(1, 1), CellState.PLAYER_O)
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        winner = self.checker.check_victory_conditions(self.board)
+        self.assertIsNone(winner)
+    
+    def test_is_draw_condition(self):
+        """Test de condición de empate."""
+        # Llenar tablero sin ganador
+        moves = [
+            (Position(0, 0), CellState.PLAYER_X),
+            (Position(0, 1), CellState.PLAYER_O),
+            (Position(0, 2), CellState.PLAYER_X),
+            (Position(1, 0), CellState.PLAYER_O),
+            (Position(1, 1), CellState.PLAYER_O),
+            (Position(1, 2), CellState.PLAYER_X),
+            (Position(2, 0), CellState.PLAYER_X),
+            (Position(2, 1), CellState.PLAYER_X),
+            (Position(2, 2), CellState.PLAYER_O)
+        ]
+        
+        for position, player in moves:
+            self.board.place_move(Move(position, player))
+        
+        is_draw = self.checker.is_draw_condition(self.board)
+        self.assertTrue(is_draw)
+    
+    def test_is_not_draw_condition_with_winner(self):
+        """Test de no empate cuando hay ganador."""
+        moves = [
+            Move(Position(0, 0), CellState.PLAYER_X),
+            Move(Position(0, 1), CellState.PLAYER_X),
+            Move(Position(0, 2), CellState.PLAYER_X)
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        is_draw = self.checker.is_draw_condition(self.board)
+        self.assertFalse(is_draw)
+
+
+class TestAIStrategyRules(unittest.TestCase):
+    """Tests para las reglas de estrategia de AI."""
+    
+    def setUp(self):
+        """Configuración antes de cada test."""
+        self.ai_rules = AIStrategyRules()
+        self.board = Board()
+    
+    def test_find_winning_move(self):
+        """Test de búsqueda de movimiento ganador."""
+        # Configurar tablero donde AI puede ganar
+        moves = [
+            Move(Position(0, 0), CellState.PLAYER_O),
+            Move(Position(0, 1), CellState.PLAYER_O)
+            # Posición (0, 2) sería la ganadora
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        winning_move = self.ai_rules.find_winning_move(
+            board=self.board,
+            player_symbol=PlayerSymbol.O
+        )
+        
+        self.assertIsNotNone(winning_move)
+        self.assertEqual(winning_move.position, Position(0, 2))
+        self.assertEqual(winning_move.player, CellState.PLAYER_O)
+    
+    def test_find_blocking_move(self):
+        """Test de búsqueda de movimiento de bloqueo."""
+        # Configurar tablero donde oponente puede ganar
+        moves = [
+            Move(Position(1, 0), CellState.PLAYER_X),
+            Move(Position(1, 1), CellState.PLAYER_X)
+            # Posición (1, 2) debe ser bloqueada
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        blocking_move = self.ai_rules.find_blocking_move(
+            board=self.board,
+            opponent_symbol=PlayerSymbol.X,
+            ai_symbol=PlayerSymbol.O
+        )
+        
+        self.assertIsNotNone(blocking_move)
+        self.assertEqual(blocking_move.position, Position(1, 2))
+        self.assertEqual(blocking_move.player, CellState.PLAYER_O)
+    
+    def test_get_strategic_position_center(self):
+        """Test de obtención de posición estratégica (centro)."""
+        # El centro es la posición más estratégica
+        strategic_move = self.ai_rules.get_strategic_position(
+            board=self.board,
+            player_symbol=PlayerSymbol.X
+        )
+        
+        # Si el tablero está vacío, debe elegir el centro
+        if strategic_move:
+            # El centro (1,1) es la posición más estratégica
+            center_position = Position(1, 1)
+            corner_positions = [
+                Position(0, 0), Position(0, 2),
+                Position(2, 0), Position(2, 2)
+            ]
+            
+            # Debe ser centro o esquina
+            self.assertIn(strategic_move.position, 
+                         [center_position] + corner_positions)
+    
+    def test_get_strategic_position_corners(self):
+        """Test de obtención de posición estratégica (esquinas)."""
+        # Ocupar el centro
+        center_move = Move(Position(1, 1), CellState.PLAYER_X)
+        self.board.place_move(center_move)
+        
+        strategic_move = self.ai_rules.get_strategic_position(
+            board=self.board,
+            player_symbol=PlayerSymbol.O
+        )
+        
+        # Debe elegir una esquina
+        if strategic_move:
+            corner_positions = [
+                Position(0, 0), Position(0, 2),
+                Position(2, 0), Position(2, 2)
+            ]
+            self.assertIn(strategic_move.position, corner_positions)
+    
+    def test_no_strategic_position_full_board(self):
+        """Test cuando no hay posiciones estratégicas disponibles."""
+        # Llenar todo el tablero
+        positions = [
+            (Position(0, 0), CellState.PLAYER_X),
+            (Position(0, 1), CellState.PLAYER_O),
+            (Position(0, 2), CellState.PLAYER_X),
+            (Position(1, 0), CellState.PLAYER_O),
+            (Position(1, 1), CellState.PLAYER_X),
+            (Position(1, 2), CellState.PLAYER_O),
+            (Position(2, 0), CellState.PLAYER_X),
+            (Position(2, 1), CellState.PLAYER_O),
+            (Position(2, 2), CellState.PLAYER_X)
+        ]
+        
+        for position, player in positions:
+            self.board.place_move(Move(position, player))
+        
+        strategic_move = self.ai_rules.get_strategic_position(
+            board=self.board,
+            player_symbol=PlayerSymbol.O
+        )
+        
+        self.assertIsNone(strategic_move)
+    
+    def test_evaluate_move_priority(self):
+        """Test de evaluación de prioridad de movimientos."""
+        # Configurar escenario donde hay múltiples opciones
+        moves = [
+            Move(Position(0, 0), CellState.PLAYER_X),
+            Move(Position(1, 0), CellState.PLAYER_O)
+        ]
+        
+        for move in moves:
+            self.board.place_move(move)
+        
+        available_positions = self.board.get_empty_positions()
+        
+        # Evaluar prioridades
+        move_priorities = []
+        for position in available_positions:
+            priority = self.ai_rules.evaluate_move_priority(
+                board=self.board,
+                position=position,
+                player_symbol=PlayerSymbol.O
+            )
+            move_priorities.append((position, priority))
+        
+        # Debe devolver prioridades numéricas
+        self.assertTrue(all(isinstance(priority, (int, float)) 
+                          for _, priority in move_priorities))
+        
+        # Las prioridades deben ser mayores que 0
+        self.assertTrue(all(priority >= 0 
+                          for _, priority in move_priorities))
+
+
+class TestRulesIntegration(unittest.TestCase):
+    """Tests de integración entre las reglas."""
+    
+    def setUp(self):
+        """Configuración antes de cada test."""
+        self.rules_engine = GameRulesEngine()
+        self.victory_checker = VictoryConditionsChecker()
+        self.ai_strategy = AIStrategyRules()
+        
+        self.board = Board()
+    
+    def test_complete_game_rules_validation(self):
+        """Test de validación completa de reglas en un juego."""
+        player_x = Player("X Player", PlayerType.HUMAN)
+        player_x.assign_symbol(PlayerSymbol.X)
+        
+        player_o = Player("O Player", PlayerType.AI_EASY)
+        player_o.assign_symbol(PlayerSymbol.O)
+        
+        current_player = player_x
+        move_count = 0
+        
+        while (self.rules_engine.can_game_continue(self.board) and 
+               move_count < 9):
+            
+            if current_player == player_x:
+                # Movimiento humano (simulado)
+                available_positions = self.board.get_empty_positions()
+                if available_positions:
+                    position = available_positions[0]  # Tomar primera disponible
+                    move = Move(position, CellState.PLAYER_X)
+                    
+                    # Validar movimiento
+                    is_valid, _ = self.rules_engine.validate_move(
+                        board=self.board,
+                        move=move,
+                        current_player=current_player
+                    )
+                    
+                    if is_valid:
+                        self.board.place_move(move)
+                        current_player = player_o
+            
+            else:
+                # Movimiento AI
+                ai_move = self.ai_strategy.get_strategic_position(
+                    board=self.board,
+                    player_symbol=PlayerSymbol.O
+                )
+                
+                if ai_move:
+                    # Validar movimiento AI
+                    is_valid, _ = self.rules_engine.validate_move(
+                        board=self.board,
+                        move=ai_move,
+                        current_player=current_player
+                    )
+                    
+                    if is_valid:
+                        self.board.place_move(ai_move)
+                        current_player = player_x
+            
+            move_count += 1
+        
+        # Verificar resultado final
+        winner = self.victory_checker.check_victory_conditions(self.board)
+        is_draw = self.victory_checker.is_draw_condition(self.board)
+        
+        # El juego debe terminar con victoria o empate
+        self.assertTrue(winner is not None or is_draw)
+
+
+if __name__ == '__main__':
+    unittest.main()

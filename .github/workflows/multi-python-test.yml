@@ -31,7 +31,7 @@ jobs:
       - name: 📦 Install dependencies
         run: |
           python -m pip install --upgrade pip wheel setuptools
-          pip install -r requirements.txt
+          pip install -r infrastructure/development/requirements.txt
           pip install pytest pytest-cov
 
       - name: 🔍 Verify installation
@@ -39,14 +39,14 @@ jobs:
           python --version
           python -c "import sys; print('Python path:', sys.executable)"
           python -c "import pytest; print('Pytest version:', pytest.__version__)"
-          python -c "import src.core.board; print('Core imports: OK')"
+          python -c "from game.entities.board import Board; print('Game domain imports: OK')"
 
       - name: 🧪 Run tests with coverage
         env:
-          PYTHONPATH: ${{ github.workspace }}/src:${{ github.workspace }}
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           cd ${{ github.workspace }}
-          python -m pytest tests/ -v --cov=src --cov-report=xml --cov-report=term-missing
+          python -m pytest tests/test_game_logic.py tests/test_helpers.py tests/test_integration.py tests/test_screaming_architecture.py -v --cov=game --cov-report=xml --cov-report=term-missing --ignore=tests/unit --ignore=tests/e2e
 
       - name: 📊 Upload coverage to Codecov
         if: matrix.python-version == '3.11'

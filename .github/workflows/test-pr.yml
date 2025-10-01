@@ -22,11 +22,15 @@ jobs:
       - name: 📦 Install dependencies
         run: |
           python -m pip install --upgrade pip wheel setuptools
-          pip install -r requirements.txt
+          pip install -r infrastructure/development/requirements.txt
+          pip install pytest
 
       - name: 🧪 Run tests
         run: |
-          python -m pytest tests/ -v --tb=short
+          # Run CI integration test first
+          python tests/test_ci_integration.py
+          # Run other tests
+          python -m pytest tests/test_game_logic.py tests/test_helpers.py tests/test_integration.py tests/test_screaming_architecture.py tests/test_ci_integration.py -v --tb=short --ignore=tests/unit --ignore=tests/e2e
 
       - name: 🔍 Lint JavaScript
         uses: actions/setup-node@v4

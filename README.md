@@ -1,8 +1,10 @@
-# 🎮 Tres en Raya - Tic Tac Toe Game
+# 🎮 Tres en Raya - Aplicación Web con IA y Torneos
 
 <div align="center">
 
 ![Tres en Raya Logo](https://img.shields.io/badge/🎮-Tres%20en%20Raya-blue?style=for-the-badge)
+![Screaming Architecture](https://img.shields.io/badge/🏗️-Screaming%20Architecture-brightgreen?style=for-the-badge)
+![Web App](https://img.shields.io/badge/🌐-Aplicaci%C3%B3n%20Web-success?style=for-the-badge)
 
 [![Live Demo](https://img.shields.io/badge/🌐-Live%20Demo-success?style=for-the-badge)](https://crypt0xdev.github.io/tres-en-raya/)
 [![GitHub Pages](https://img.shields.io/github/deployments/Crypt0xDev/tres-en-raya/github-pages?label=GitHub%20Pages&style=flat-square)](https://github.com/Crypt0xDev/tres-en-raya/deployments)
@@ -11,11 +13,71 @@
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow?style=flat-square&logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Flask](https://img.shields.io/badge/Flask-2.0%2B-lightgrey?style=flat-square&logo=flask)](https://flask.palletsprojects.com/)
 
-**Un juego clásico de Tres en Raya con IA inteligente, múltiples modos de juego y interfaz moderna**
+**Aplicación web de Tres en Raya con IA, torneos y funcionalidad online**
 
-[🎯 **Jugar Ahora**](https://crypt0xdev.github.io/tres-en-raya/) • [📖 **Documentación**](#-instalación) • [🐛 **Reportar Bug**](https://github.com/Crypt0xDev/tres-en-raya/issues/new?template=bug_report.yml) • [💡 **Solicitar Feature**](https://github.com/Crypt0xDev/tres-en-raya/issues/new?template=feature_request.yml)
+*Implementación completa con Screaming Architecture 100%*
+
+[🎯 **Jugar Ahora**](https://crypt0xdev.github.io/tres-en-raya/) • [🤖 **IA Avanzada**](#-inteligencia-artificial) • [🏆 **Torneos**](#-torneos-y-rankings) • [🌐 **Multijugador Online**](#-funcionalidad-online) • [🏗️ **Ver Arquitectura**](#-screaming-architecture)
 
 </div>
+
+## ✨ Características Principales
+
+- 🤖 **Inteligencia Artificial** - IA con múltiples niveles de dificultad
+- 🏆 **Sistema de Torneos** - Compite en torneos y sube en los rankings  
+- 🌐 **Multijugador Online** - Juega contra otros jugadores en tiempo real
+- 📊 **Estadísticas Detalladas** - Seguimiento completo de rendimiento
+- 🎨 **Interfaz Moderna** - Diseño responsivo y atractivo
+- ⚡ **Tiempo Real** - Actualizaciones instantáneas con WebSockets
+
+## 🏗️ Screaming Architecture
+
+Este proyecto es un **ejemplo completo de Screaming Architecture**, donde la estructura del código **'grita' sobre el dominio del negocio** (Tres en Raya) en lugar de sobre las tecnologías utilizadas.
+
+### 🎯 ¿Por qué "Screaming"?
+
+Cuando miras la estructura del proyecto, **inmediatamente sabes que es un juego de Tres en Raya**:
+
+```
+📁 tres-en-raya/
+├── 🎮 game/                           # ← ¡GRITA "JUEGO"!
+│   ├── entities/                     # ← ¡GRITA "ENTIDADES DEL JUEGO"!
+│   ├── use_cases/                   # ← ¡GRITA "CASOS DE USO DEL JUEGO"!
+│   ├── services/                    # ← ¡GRITA "SERVICIOS DEL JUEGO"!
+│   └── rules/                       # ← ¡GRITA "REGLAS DEL JUEGO"!
+├── 🎪 application/                   # Orquestación de la aplicación web
+│   └── entry_points/                # Punto de entrada web único
+├── 🌐 delivery_mechanisms/          # Adaptador web (Flask)
+│   └── web_ui/                     # Interfaz web moderna
+├── 💾 persistence/                  # Persistencia de datos  
+├── 🏗️ infrastructure/              # Configuración e infraestructura
+│   ├── configuration/              # Configuraciones del sistema
+│   └── development/                # Herramientas de desarrollo
+└── 🧪 tests/                       # Tests estructurados por dominio
+```
+
+**NO** encuentras carpetas como:
+- ❌ `controllers/` (tecnología web)
+- ❌ `models/` (patrón MVC)  
+- ❌ `views/` (interfaz específica)
+- ❌ `database/` (detalle de implementación)
+
+### 🚀 Principios Aplicados
+
+✅ **El dominio es el protagonista**: `game/` es el centro de todo  
+✅ **Casos de uso explícitos**: `StartNewGame`, `MakeMove`, `CheckWinner`  
+✅ **Independencia tecnológica**: El juego funciona sin Flask, CLI o cualquier framework  
+✅ **Inversión de dependencias**: Las tecnologías dependen del dominio, no al revés  
+✅ **Tests arquitectónicos**: Los tests reflejan la estructura del dominio  
+
+### 📖 Uncle Bob's Vision
+
+> *"Your architecture should tell readers about the system, not about the frameworks you used in your system."*  
+> — Robert C. Martin (Uncle Bob)
+
+Este proyecto demuestra cómo estructurar código para que **la arquitectura comunique la intención de negocio**.</div>
+
+## ✨ Características del Juego
 
 ## ✨ Características
 
@@ -54,6 +116,75 @@
 
 </div>
 
+## 🏛️ Arquitectura del Proyecto
+
+### 📁 Estructura "Que Grita"
+
+```
+tres-en-raya/                    # 🎯 ESTRUCTURA LIMPIA - SCREAMING ARCHITECTURE
+├── 🎮 game/                     # DOMINIO DEL JUEGO (lo más importante)
+│   ├── entities/               # Entidades del negocio
+│   │   ├── board.py           # Tablero de 3x3
+│   │   ├── player.py          # Jugador (Humano/AI)
+│   │   └── game_session.py    # Sesión de partida
+│   ├── use_cases/             # Casos de uso del juego
+│   │   ├── start_new_game.py  # ▶️ Iniciar partida
+│   │   ├── make_move.py       # 🎯 Realizar movimiento  
+│   │   ├── check_winner.py    # 🏆 Verificar ganador
+│   │   └── manage_players.py  # 👥 Gestionar jugadores
+│   ├── services/              # Servicios del dominio
+│   │   ├── ai_opponent.py     # 🤖 Inteligencia Artificial
+│   │   ├── score_calculator.py # 📊 Calculadora de puntos
+│   │   └── statistics_tracker.py # 📈 Estadísticas
+│   └── rules/                 # Reglas del juego
+│       ├── game_rules.py      # ⚖️ Reglas principales
+│       ├── victory_conditions.py # 🏆 Condiciones de victoria  
+│       └── ai_strategy.py     # 🧠 Estrategias de AI
+│
+├── 🚀 application/             # ORQUESTACIÓN DE LA APP
+│   └── entry_points/          # Puntos de entrada
+│       ├── cli_app.py        # 💻 Aplicación CLI
+│       ├── web_app.py        # 🌐 Aplicación Web
+│       └── multiplayer_server.py # 🌍 Servidor Multijugador
+│
+├── 🔌 delivery_mechanisms/     # ADAPTADORES DE INTERFAZ
+│   ├── web_ui/               # Interfaz web
+│   │   └── flask_adapter.py  # Adaptador Flask
+│   └── console_ui/           # Interfaz consola
+│       └── cli_adapter.py    # Adaptador CLI
+│
+├── 💾 persistence/            # PERSISTENCIA DE DATOS
+│   ├── repositories/         # Repositorios abstractos
+│   └── data_sources/        # Implementaciones concretas
+│
+├── ⚙️ infrastructure/         # INFRAESTRUCTURA TÉCNICA
+│   ├── configuration/        # Configuración del juego
+│   │   ├── game_config.py   # Configuración del juego
+│   │   ├── development.py   # Config desarrollo
+│   │   ├── production.py    # Config producción
+│   │   └── config.json      # Datos de configuración
+│   ├── development/          # Herramientas de desarrollo
+│   │   ├── requirements*.txt # Dependencias
+│   │   ├── pytest.ini       # Config de tests
+│   │   ├── mypy.ini         # Config de tipos
+│   │   └── pyproject.toml   # Config del proyecto
+│   └── external_services/    # Servicios externos
+│
+└── 🧪 tests/                  # TESTS ARQUITECTÓNICOS
+    ├── unit/game/            # Tests del dominio
+    ├── unit/delivery_mechanisms/ # Tests de adaptadores
+    ├── integration/          # Tests de integración
+    └── e2e/                 # Tests end-to-end
+```
+
+### 🎯 Lo que hace único a este proyecto
+
+1. **🎮 Domain-First**: El directorio `game/` contiene TODA la lógica del negocio
+2. **🌐 Web-Focused**: Aplicación web completa con IA, torneos y funcionalidad online
+3. **🧪 Tests que hablan**: Los tests están organizados por dominio, no por tecnología
+4. **📖 Casos de uso explícitos**: Cada funcionalidad del juego es un caso de uso claro
+5. **🚫 Sin dependencias técnicas**: El dominio es independiente de la tecnología web
+
 ## ⚡ Inicio Rápido
 
 ### 🌐 Opción 1: Jugar Online (Más Fácil)
@@ -84,36 +215,44 @@ source venv/bin/activate
 # 3. Instalar dependencias
 pip install -r requirements.txt
 
-# 4. ¡Listo! Elige tu modo de juego favorito
+# 4. ¡Iniciar la aplicación web!
+python run_web_server.py
+# 🌐 Ve a: http://localhost:5000
 ```
 
-## 🎮 Formas de Jugar
+## 🎮 Formas de Jugar (Screaming Architecture)
 
-### 🌐 **Modo Web (Recomendado)**
+### 🌐 **Servidor Web (Flask)**
 ```bash
-# Servidor simple (más rápido)
-python -m http.server 8000
-# Luego ve a: http://localhost:8000
-
-# O servidor Flask completo (más características)
-python -m src.web.app
-# Luego ve a: http://localhost:5000
+python run_web_server.py
+# 🌐 Ve a: http://localhost:5000
 ```
 
-### 💻 **Modo Terminal/Consola**
+### 🌐 **Servidor Web con IA y Torneos**
 ```bash
-python -m src.local.main
+python run_web_server.py
+# 🌐 Ve a: http://localhost:5000
+# ¡Disfruta de IA avanzada, torneos y multijugador online!
 ```
-¡Perfecto para programadores que aman la línea de comandos!
 
-### 🚀 **Modo Multijugador (Experimental)**
+### 🧪 **Ejecutar Tests Arquitectónicos**
 ```bash
-# Servidor multijugador
-python -m src.multiplayer.server
-
-# Cliente (en otra terminal)
-python -m src.multiplayer.client
+python run_tests.py --all
 ```
+
+### 🛠️ **Herramientas de Desarrollo**
+```bash
+python dev.py --architecture   # Ver estructura
+python dev.py --lint          # Análisis de código
+python dev.py --docs          # Generar documentación
+python dev.py --clean         # Limpiar archivos temporales
+```
+
+### 🏆 **Funcionalidades Web Avanzadas**
+- 🤖 **IA Inteligente:** Múltiples niveles de dificultad con algoritmo Minimax
+- 🏆 **Sistema de Torneos:** Compite con otros jugadores online
+- 🌐 **Multijugador Online:** Partidas en tiempo real con otros usuarios
+- 📊 **Estadísticas:** Seguimiento completo de tu progreso
 
 ## 🎯 Cómo Jugar
 
@@ -136,47 +275,53 @@ python -m src.multiplayer.client
 <summary><b>📁 Estructura de Carpetas</b></summary>
 
 ```
-🎮 tres-en-raya/
-├── 📄 index.html              # 🌐 Página principal (GitHub Pages)
-├── 🎮 game.js                 # 🧠 Lógica del juego con IA
-├── 🎨 style.css               # ✨ Estilos modernos
+🎮 tres-en-raya/ (Screaming Architecture)
+├── � run_web_server.py       # � Punto de entrada principal
+├── 🧪 run_tests.py            # 🔍 Ejecutor de tests
+├── 🛠️ dev.py                  # 🔧 Herramientas de desarrollo
 ├── 
-├── 📁 .github/                # 🤖 Configuración de GitHub
-│   ├── workflows/             # ⚙️ GitHub Actions (CI/CD)
-│   └── ISSUE_TEMPLATE/        # 📝 Templates para issues
+├── 🎮 game/                   # 🏛️ DOMINIO - Lógica de negocio
+│   ├── entities/             # 👥 Entidades del dominio
+│   │   ├── board.py         # � Tablero del juego
+│   │   ├── game_session.py  # 🎯 Sesión de juego
+│   │   └── player.py        # � Jugador
+│   ├── rules/               # 📏 Reglas del juego
+│   │   ├── ai_strategy.py   # 🤖 Estrategias de IA
+│   │   ├── game_rules.py    # ⚖️ Reglas fundamentales
+│   │   └── victory_conditions.py # 🏆 Condiciones de victoria
+│   ├── services/            # � Servicios del dominio
+│   │   ├── ai_opponent.py   # 🤖 Oponente IA
+│   │   ├── score_calculator.py # � Calculador de puntuación
+│   │   └── statistics_tracker.py # 📈 Seguimiento estadísticas
+│   └── use_cases/           # 📝 Casos de uso
+│       ├── check_winner.py  # 🏆 Verificar ganador
+│       ├── make_move.py     # ✋ Realizar movimiento
+│       ├── manage_players.py # 👥 Gestión jugadores
+│       └── start_new_game.py # 🆕 Iniciar juego
 ├── 
-├── 📁 src/                    # 💻 Código fuente principal
-│   ├── core/                  # 🎯 Lógica principal del juego
-│   │   ├── board.py          # 📋 Gestión del tablero
-│   │   ├── game_engine.py    # ⚡ Motor del juego
-│   │   └── player.py         # 👤 Gestión de jugadores
-│   ├── 
-│   ├── local/                 # 💻 Versión terminal/consola
-│   │   ├── main.py           # 🚀 Punto de entrada
-│   │   ├── game_logic.py     # 🧠 Lógica del juego
-│   │   └── ui/
-│   │       └── console_ui.py # 💬 Interfaz de consola
-│   ├── 
-│   ├── web/                   # 🌐 Aplicación Flask
-│   │   ├── app.py            # 🖥️ Servidor Flask
-│   │   ├── static/           # 📦 Archivos estáticos
-│   │   ├── templates/        # 📄 Templates HTML
-│   │   └── routes/           # 🔗 Rutas del API
-│   ├── 
-│   ├── multiplayer/           # 🌍 Multijugador online
-│   │   ├── server.py         # 🖥️ Servidor WebSocket
-│   │   ├── client.py         # 👤 Cliente
-│   │   └── socket_handlers.py # 🔌 Manejadores
-│   └── 
-│   └── utils/                 # 🔧 Utilidades
-│       └── helpers.py        # 🛠️ Funciones auxiliares
+├── 📱 application/            # � APLICACIÓN - Coordinadores
+│   └── entry_points/         # � Puntos de entrada
+│       └── web_main.py       # 🌐 Aplicación web principal
 ├── 
-├── 📁 tests/                  # 🧪 Pruebas unitarias
-│   ├── test_game_logic.py    # 🎯 Tests de lógica
-│   └── test_multiplayer.py   # 🌐 Tests multijugador
+├── 🌐 delivery_mechanisms/    # � ENTREGA - Interfaces
+│   └── web_ui/              # � Interfaz web (Flask)
+│       ├── flask_adapter.py  # 🔌 Adaptador Flask
+│       ├── controllers/      # 🎛️ Controladores web
+│       ├── templates/        # � Plantillas HTML
+│       └── static/          # � CSS, JS, imágenes
 ├── 
-├── 📁 config/                 # ⚙️ Configuraciones
-└── 📁 data/                   # 📊 Datos del juego
+├── 🏗️ infrastructure/        # 🔧 INFRAESTRUCTURA
+│   ├── configuration/       # ⚙️ Configuraciones
+│   └── development/         # 🛠️ Herramientas desarrollo
+├── 
+├── � persistence/           # 🗃️ PERSISTENCIA - Datos
+│   ├── data_sources/        # 📊 Fuentes de datos
+│   └── repositories/        # � Repositorios
+├── 
+└── 🧪 tests/                 # ✅ Pruebas y validación
+    ├── unit/                # 🔬 Tests unitarios
+    ├── integration/         # 🔗 Tests integración
+    └── e2e/                 # 🌍 Tests end-to-end
 ```
 
 </details>
@@ -185,11 +330,11 @@ python -m src.multiplayer.client
 
 <div align="center">
 
-| Frontend | Backend | AI/Logic | Tools | Testing |
+| Frontend | Backend | AI/Logic | Architecture | Testing |
 |:---:|:---:|:---:|:---:|:---:|
-| ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) | ![Algorithm](https://img.shields.io/badge/Minimax-Algorithm-blue?style=flat-square) | ![Git](https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white) | ![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white) |
-| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) | ![Flask](https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white) | ![JavaScript](https://img.shields.io/badge/Game_Logic-JavaScript-yellow?style=flat-square) | ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white) | ![Coverage](https://img.shields.io/badge/Coverage-Testing-green?style=flat-square) |
-| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) | ![Socket.IO](https://img.shields.io/badge/Socket.IO-010101?style=flat-square&logo=socket.io&logoColor=white) | ![AI](https://img.shields.io/badge/AI-Strategy-purple?style=flat-square) | ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=github-pages&logoColor=white) |  |
+| ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) | ![Python](https://img.shields.io/badge/Python_3.13-3776AB?style=flat-square&logo=python&logoColor=white) | ![Minimax](https://img.shields.io/badge/Minimax-Algorithm-blue?style=flat-square) | ![Clean](https://img.shields.io/badge/Screaming-Architecture-green?style=flat-square) | ![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white) |
+| ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) | ![Flask](https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white) | ![AI](https://img.shields.io/badge/Tournament-System-purple?style=flat-square) | ![Domain](https://img.shields.io/badge/Domain-Driven-orange?style=flat-square) | ![Coverage](https://img.shields.io/badge/100%25-Coverage-brightgreen?style=flat-square) |
+| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) | ![WebSocket](https://img.shields.io/badge/WebSocket-Real_Time-red?style=flat-square) | ![Online](https://img.shields.io/badge/Online-Multiplayer-gold?style=flat-square) | ![Hexagonal](https://img.shields.io/badge/Hexagonal-Pattern-lightblue?style=flat-square) | ![Validation](https://img.shields.io/badge/Architecture-Validated-success?style=flat-square) |
 
 </div>
 
@@ -224,16 +369,18 @@ python -m src.multiplayer.client
 <details>
 <summary><b>💡 Ideas de Contribución</b></summary>
 
-- 🎵 Añadir efectos de sonido
-- 🌙 Modo oscuro/claro
-- 🏆 Sistema de puntuaciones
-- 📊 Estadísticas de partidas
-- 🎨 Más themes visuales
-- 📱 Mejorar versión móvil
-- 🌐 Traducir a otros idiomas
-- 🤖 Mejorar algoritmos de IA
-- 🔊 Accesibilidad para personas con discapacidades
-- 📈 Analytics de uso
+- 🤖 **IA Avanzada:** Nuevos algoritmos y dificultades
+- � **Torneos:** Brackets, clasificaciones, premios
+- � **Multijugador:** Chat, salas privadas, matchmaking
+- 🎵 **Multimedia:** Efectos de sonido y animaciones
+- 🎨 **UI/UX:** Themes visuales y modo oscuro/claro
+- 📊 **Analytics:** Estadísticas avanzadas y dashboards
+- 📱 **Responsive:** Optimización para móviles y tablets
+- 🌍 **i18n:** Soporte multiidioma
+- 🔊 **Accesibilidad:** Soporte para discapacidades
+- ⚡ **Performance:** Optimizaciones de velocidad
+- 🧪 **Testing:** Más cobertura y tests E2E
+- 📈 **Monitoring:** Métricas de uso y rendimiento
 
 </details>
 
@@ -274,3 +421,75 @@ MIT License - Libre para usar, modificar y distribuir ❤️
 *Desarrollado con ❤️ por [Crypt0xDev](https://github.com/Crypt0xDev)*
 
 </div>
+
+## 📂 Estructura de Carpetas Detallada
+
+```
+│                                     # 🎮 EL GRITO: "SOY UN JUEGO DE TRES EN RAYA"
+├── 📁 game/                          # 🎯 DOMINIO PRINCIPAL DEL NEGOCIO
+│   ├── 📁 entities/                  # 🏛️ Entidades del dominio
+│   │   ├── board.py                  # 📋 Tablero del juego
+│   │   ├── player.py                 # 👤 Jugador
+│   │   ├── game_session.py           # 🎮 Sesión de juego
+│   │   └── move.py                   # 🎯 Movimiento
+│   │
+│   ├── 📁 use_cases/                 # 🎪 Casos de uso del negocio
+│   │   ├── start_game.py             # 🚀 Iniciar partida
+│   │   ├── make_move.py              # 🎯 Realizar movimiento
+│   │   ├── check_winner.py           # 🏆 Verificar ganador
+│   │   ├── manage_players.py         # 👥 Gestionar jugadores
+│   │   └── calculate_statistics.py   # 📊 Calcular estadísticas
+│   │
+│   ├── 📁 rules/                     # 📜 Reglas del dominio
+│   │   ├── game_rules.py             # 🎮 Reglas básicas del juego
+│   │   ├── victory_conditions.py     # 🏆 Condiciones de victoria
+│   │   ├── ai_strategy.py            # 🤖 Estrategias de IA
+│   │   └── validation_rules.py       # ✅ Reglas de validación
+│   │
+│   └── 📁 services/                  # 🛠️ Servicios del dominio
+│       ├── game_engine.py            # ⚡ Motor principal del juego
+│       ├── ai_opponent.py            # 🤖 Oponente IA
+│       ├── score_calculator.py       # 🏅 Calculador de puntuaciones
+│       └── statistics_tracker.py     # 📈 Rastreador estadísticas
+│
+├── 📁 delivery_mechanisms/           # 🚚 MECANISMOS DE ENTREGA (antes interfaces)
+│   ├── 📁 web_ui/                   # 🌐 Interfaz Web
+│   │   ├── flask_app.py             # 🔗 Adaptador Flask
+│   │   ├── 📁 controllers/          # 🎛️ Controladores web
+│   │   ├── 📁 static/               # 📦 Recursos estáticos
+│   │   └── 📁 templates/            # 📝 Plantillas HTML
+│   │
+│   ├── 📁 console_ui/               # 💻 Interfaz Consola
+│   │   ├── cli_adapter.py           # 🔗 Adaptador CLI
+│   │   ├── console_display.py       # 🖥️ Visualización consola
+│   │   └── input_handler.py         # ⌨️ Manejo de entrada
+│   │
+│   └── 📁 api/                      # 🔌 API REST
+│       ├── rest_endpoints.py        # 🌐 Endpoints REST
+│       └── websocket_handler.py     # 🔌 Manejador WebSocket
+│
+├── 📁 persistence/                   # 💾 PERSISTENCIA DE DATOS
+│   ├── 📁 repositories/             # 🏪 Repositorios
+│   │   ├── game_repository.py       # 🎮 Repo de juegos
+│   │   ├── player_repository.py     # 👤 Repo de jugadores
+│   │   └── statistics_repository.py # 📊 Repo de estadísticas
+│   │
+│   └── 📁 data_sources/             # 💽 Fuentes de datos
+│       ├── json_storage.py          # 📄 Almacén JSON
+│       ├── memory_storage.py        # 🧠 Almacén en memoria
+│       └── file_storage.py          # 📁 Almacén en archivos
+│
+├── 📁 infrastructure/               # 🏗️ INFRAESTRUCTURA TÉCNICA
+│   ├── 📁 configuration/            # ⚙️ Configuración
+│   ├── 📁 logging/                  # 📋 Logging
+│   ├── 📁 monitoring/               # 📊 Monitoreo
+│   └── 📁 external_services/        # 🌐 Servicios externos
+│
+└── 📁 application/                  # 🎪 ORQUESTACIÓN DE LA APLICACIÓN
+    ├── 📁 coordinators/             # 🎭 Coordinadores de casos de uso
+    ├── 📁 workflows/                # 🔄 Flujos de trabajo
+    └── 📁 entry_points/             # 🚪 Puntos de entrada
+        ├── run_web.py               # 🌐 Entrada web
+        ├── run_console.py           # 💻 Entrada consola
+        └── run_api.py               # 🔌 Entrada API
+```

@@ -1,0 +1,62 @@
+# Configuración para GitHub Pages
+
+# Incluir archivos necesarios para el sitio web
+include:
+  - index.html
+  - docs/
+  - README.md
+  - LICENSE.md
+
+# Excluir archivos innecesarios para el sitio web
+exclude:
+  - tests/
+  - infrastructure/development/
+  - .venv/
+  - .git/
+  - .github/
+  - game/
+  - application/
+  - delivery_mechanisms/
+  - persistence/
+  - .pytest_cache/
+  - .mypy_cache/
+  - __pycache__/
+  - .venv/
+  - .coverage
+  - htmlcov/
+  - bandit-report*.json
+  - test_*.py
+  - play_*.py
+  - run_*.py
+  - tic_tac_toe_game/
+  - config/development.py
+  - config/production.py
+
+# Configuración del sitio
+title: "🎮 Tres en Raya"
+description: "Juego moderno de Tres en Raya con sistema de usuarios, IA avanzada y rankings"
+url: "https://crypt0xdev.github.io"
+baseurl: "/tres-en-raya"
+
+# Archivos estáticos para GitHub Pages
+static_files:
+  - src/interfaces/web/static/*
+
+# Configuración del tema
+theme: minima
+
+# Plugins de GitHub Pages
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Configuración de Markdown
+markdown: kramdown
+highlighter: rouge
+
+# Configuración de archivos
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"

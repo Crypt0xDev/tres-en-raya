@@ -35,8 +35,8 @@ jobs:
         run: |
           # Run CI integration test first
           python tests/test_ci_integration.py
-          # Run other tests with pytest
-          python -m pytest tests/test_game_logic.py tests/test_helpers.py tests/test_integration.py tests/test_screaming_architecture.py tests/test_screaming_architecture_validation.py tests/test_ci_integration.py -v --ignore=tests/unit --ignore=tests/e2e
+          # Run other tests with pytest and coverage
+          python -m pytest tests/test_game_logic.py tests/test_helpers.py tests/test_integration.py tests/test_screaming_architecture.py tests/test_screaming_architecture_validation.py tests/test_ci_integration.py -v --cov=game --cov-report=xml --cov-report=term-missing --ignore=tests/unit --ignore=tests/e2e
 
       - name: 📊 Upload coverage to Codecov
         uses: codecov/codecov-action@v4

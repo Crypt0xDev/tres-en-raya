@@ -1,7 +1,16 @@
-name: 🧪 Multi-Python Tests (Alternative)
+name: 🧪 Multi-Python Tests
 
 on:
-  workflow_dispatch: # Manual trigger only for now
+  schedule:
+    # Run weekly on Sundays at 3 AM UTC
+    - cron: "0 3 * * 0"
+  workflow_dispatch: # Manual trigger
+  pull_request:
+    branches: [main]
+    paths:
+      - "game/**"
+      - "tests/**"
+      - "infrastructure/development/requirements*.txt"
 
 jobs:
   test:

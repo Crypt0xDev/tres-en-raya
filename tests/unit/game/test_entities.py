@@ -5,27 +5,13 @@ Estos tests verifican el comportamiento de las entidades principales
 del dominio siguiendo los principios de Screaming Architecture.
 """
 
-import os
-import sys
 import unittest
 from datetime import datetime
 
-# Add project root to sys.path for imports
-import sys
-from pathlib import Path
-project_root = Path(__file__).resolve().parent.parent.parent.parent
-sys.path.insert(0, str(project_root))
-
-try:
-    # Imports del dominio
-    from game.entities.board import Board, Position, Move, CellState
-    from game.entities.player import Player, PlayerType, PlayerSymbol, PlayerStats
-    from game.entities.game_session import GameSession, GameState, GameResult, GameConfiguration
-except ImportError as e:
-    print(f"Error importing from game package: {e}")
-    print(f"Current working directory: {os.getcwd()}")
-    print(f"Python path: {sys.path}")
-    raise
+# Imports del dominio (conftest.py maneja el path)
+from game.entities.board import Board, Position, Move, CellState
+from game.entities.player import Player, PlayerType, PlayerSymbol, PlayerStats
+from game.entities.game_session import GameSession, GameState, GameResult, GameConfiguration
 
 
 class TestBoardEntity(unittest.TestCase):

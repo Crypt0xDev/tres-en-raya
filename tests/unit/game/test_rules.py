@@ -7,15 +7,13 @@ del dominio siguiendo los principios de Screaming Architecture.
 
 import unittest
 
-# Imports del dominio
-from game.entities import (
-    Board, Position, Move, CellState,
-    Player, PlayerType, PlayerSymbol,
-    GameSession, GameState, GameConfiguration
-)
-from game.rules.game_rules import GameRulesEngine
-from game.rules.victory_conditions import VictoryConditionsChecker
-from game.rules.ai_strategy import AIStrategyRules
+# Imports del dominio (conftest.py maneja el path)
+from game.entities.board import Board, Position, Move, CellState
+from game.entities.player import Player, PlayerType, PlayerSymbol
+from game.entities.game_session import GameSession, GameState, GameConfiguration
+from game.rules.game_rules import GameRules
+from game.rules.victory_conditions import VictoryConditions
+from game.rules.ai_strategy import AIStrategyFactory, StrategyType
 
 
 class TestGameRulesEngine(unittest.TestCase):
@@ -150,7 +148,7 @@ class TestVictoryConditionsChecker(unittest.TestCase):
     
     def setUp(self):
         """Configuración antes de cada test."""
-        self.checker = VictoryConditionsChecker()
+        self.checker = VictoryConditions()
         self.board = Board()
     
     def test_check_horizontal_victory_top_row(self):
@@ -284,7 +282,7 @@ class TestAIStrategyRules(unittest.TestCase):
     
     def setUp(self):
         """Configuración antes de cada test."""
-        self.ai_rules = AIStrategyRules()
+        self.ai_rules = AIStrategyFactory()
         self.board = Board()
     
     def test_find_winning_move(self):

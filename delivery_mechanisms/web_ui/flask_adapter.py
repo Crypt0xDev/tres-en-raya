@@ -63,16 +63,6 @@ class FlaskWebAdapter:
         @self.app.route('/')
         def index():
             """Página principal del juego."""
-            return render_template('app-github-pages.html')
-        
-        @self.app.route('/github-pages')
-        def github_pages():
-            """Página de GitHub Pages."""
-            return render_template('github-pages-index.html')
-        
-        @self.app.route('/simple')
-        def simple_game():
-            """Versión simple del juego."""
             return render_template('index.html')
         
         @self.app.route('/api/game/start', methods=['POST'])

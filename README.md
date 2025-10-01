@@ -6,8 +6,6 @@
 ![Screaming Architecture](https://img.shields.io/badge/🏗️-Screaming%20Architecture-brightgreen?style=for-the-badge)
 ![Web App](https://img.shields.io/badge/🌐-Aplicaci%C3%B3n%20Web-success?style=for-the-badge)
 
-[![Live Demo](https://img.shields.io/badge/🌐-Live%20Demo-success?style=for-the-badge)](https://crypt0xdev.github.io/tres-en-raya/)
-[![GitHub Pages](https://img.shields.io/github/deployments/Crypt0xDev/tres-en-raya/github-pages?label=GitHub%20Pages&style=flat-square)](https://github.com/Crypt0xDev/tres-en-raya/deployments)
 [![Tests](https://img.shields.io/github/actions/workflow/status/Crypt0xDev/tres-en-raya/test.yml?branch=main&label=Tests&style=flat-square)](https://github.com/Crypt0xDev/tres-en-raya/actions)
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=flat-square&logo=python)](https://www.python.org/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow?style=flat-square&logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
@@ -397,7 +395,6 @@ MIT License - Libre para usar, modificar y distribuir ❤️
 - 🎮 Inspirado en el clásico juego Tic-Tac-Toe
 - 🤖 Algoritmo Minimax para IA perfecta
 - 🎨 Diseño moderno inspirado en Material Design
-- 🌐 Desplegado con GitHub Pages
 - 👥 Gracias a todos los [contribuidores](https://github.com/Crypt0xDev/tres-en-raya/graphs/contributors)
 
 ## 📞 Contacto y Soporte

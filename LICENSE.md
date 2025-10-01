@@ -81,7 +81,6 @@ Las contribuciones son bienvenidas. Por favor revisa:
 - 👨‍💻 **Autor**: Alexis Rodriguez (Crypt0xDev)
 - 🌐 **GitHub**: [@Crypt0xDev](https://github.com/Crypt0xDev)
 - 📧 **Proyecto**: [tres-en-raya](https://github.com/Crypt0xDev/tres-en-raya)
-- 🎮 **Demo**: [GitHub Pages](https://crypt0xdev.github.io/tres-en-raya/)
 
 ---
 

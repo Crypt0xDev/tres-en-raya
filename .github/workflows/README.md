@@ -31,11 +31,6 @@ Este directorio contiene los workflows automatizados para CI/CD del proyecto Tre
   - `safety` - Base de datos de seguridad Python
   - `bandit` - Análisis de código estático
 
-### 🚀 [Deploy to GitHub Pages](deploy.yml)
-- **Trigger:** Push a `main`, Manual
-- **Función:** Despliega aplicación web a GitHub Pages
-- **Incluye:** Archivos estáticos, landing page, app
-
 ## 🎯 Arquitectura de Testing
 
 Los workflows están diseñados para validar:

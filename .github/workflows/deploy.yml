@@ -30,11 +30,11 @@ jobs:
       - name: 🏗️ Build Site
         run: |
           echo "🚀 Building GitHub Pages site..."
-          
+
           # Crear directorio de build limpio
           rm -rf _site
           mkdir -p _site
-          
+
           # Copiar juego como página principal (sin landing page)
           if [ -f "app-github-pages.html" ]; then
             cp app-github-pages.html _site/index.html
@@ -44,20 +44,27 @@ jobs:
             echo "❌ App file not found"
             exit 1
           fi
-          
-          # Copiar recursos estáticos
-          if [ -d "src/interfaces/web/static" ]; then
-            cp -r src/interfaces/web/static _site/
-            echo "✅ Static files copied ($(find _site/static -type f | wc -l) files)"
-          else
-            echo "❌ Static directory not found"
-            exit 1
+
+          # Copiar recursos estáticos desde la estructura de Screaming Architecture
+          mkdir -p _site/static
+          if [ -d "delivery_mechanisms/web_ui/css" ]; then
+            cp -r delivery_mechanisms/web_ui/css _site/static/
+            echo "✅ CSS files copied"
           fi
-          
+          if [ -d "delivery_mechanisms/web_ui/js" ]; then
+            cp -r delivery_mechanisms/web_ui/js _site/static/
+            echo "✅ JS files copied"
+          fi
+          if [ -d "delivery_mechanisms/web_ui/templates" ]; then
+            cp -r delivery_mechanisms/web_ui/templates _site/static/
+            echo "✅ Template files copied"
+          fi
+          echo "✅ Static resources copied ($(find _site/static -type f 2>/dev/null | wc -l) files)"
+
           # Crear .nojekyll para deshabilitar Jekyll
           touch _site/.nojekyll
           echo "✅ Jekyll processing disabled"
-          
+
           echo "📁 Final site structure:"
           find _site -type f | head -10
           echo "Total files: $(find _site -type f | wc -l)"

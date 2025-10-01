@@ -28,7 +28,7 @@ def check_screaming_architecture_compliance():
     required_dirs = {
         'game': 'Dominio central del juego',
         'application': 'Coordinadores de casos de uso',
-        'delivery_mechanisms': 'Adaptadores de interfaz',
+        'interfaces': 'Adaptadores de interfaz',
         'persistence': 'Gestión de datos',
         'infrastructure': 'Configuración y herramientas'
     }
@@ -63,21 +63,21 @@ def check_screaming_architecture_compliance():
             issues.append(f"Subdirectorio game/{subdir} no encontrado")
         total_checks += 1
     
-    # 3. Verificar adaptadores (delivery_mechanisms/)
+    # 3. Verificar adaptadores (interfaces/)
     print("\n3️⃣ ADAPTADORES DE INTERFAZ:")
     adapter_dirs = {
         'web_ui': 'Adaptador web (Flask)',
         'console_ui': 'Adaptador CLI'
     }
     
-    delivery_dir = project_root / 'delivery_mechanisms'
+    delivery_dir = project_root / 'interfaces'
     for adapter, description in adapter_dirs.items():
         adapter_path = delivery_dir / adapter
         if adapter_path.exists():
-            print(f"   ✅ delivery_mechanisms/{adapter}/ - {description}")
+            print(f"   ✅ interfaces/{adapter}/ - {description}")
             compliance_score += 1
         else:
-            print(f"   ❌ delivery_mechanisms/{adapter}/ - Faltante")
+            print(f"   ❌ interfaces/{adapter}/ - Faltante")
             issues.append(f"Adaptador {adapter} no encontrado")
         total_checks += 1
     
@@ -111,11 +111,11 @@ def check_screaming_architecture_compliance():
         compliance_score += 1
         
         # Verificar adaptadores
-        from delivery_mechanisms.web_ui.flask_adapter import FlaskWebAdapter
+        from interfaces.web_ui.flask_adapter import FlaskWebAdapter
         print("   ✅ Adaptador web importable")
         compliance_score += 1
         
-        from delivery_mechanisms.console_ui.cli_adapter import CLIAdapter
+        from interfaces.console_ui.cli_adapter import CLIAdapter
         print("   ✅ Adaptador CLI importable")
         compliance_score += 1
         

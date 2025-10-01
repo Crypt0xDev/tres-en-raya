@@ -25,7 +25,7 @@ class TestCIIntegration(unittest.TestCase):
         
         # Verificar carpetas principales
         self.assertTrue((project_root / 'game').exists())
-        self.assertTrue((project_root / 'delivery_mechanisms').exists())
+        self.assertTrue((project_root / 'interfaces').exists())
         self.assertTrue((project_root / 'application').exists())
         self.assertTrue((project_root / 'persistence').exists())
         self.assertTrue((project_root / 'infrastructure').exists())
@@ -59,7 +59,7 @@ class TestCIIntegration(unittest.TestCase):
     def test_web_adapter_imports(self):
         """Verifica que el adaptador web se puede importar."""
         try:
-            from delivery_mechanisms.web_ui.flask_adapter import FlaskWebAdapter
+            from interfaces.web_ui.flask_adapter import FlaskWebAdapter
             self.assertTrue(True)
         except ImportError as e:
             self.fail(f'Web adapter import failed: {e}')

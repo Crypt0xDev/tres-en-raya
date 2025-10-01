@@ -13,7 +13,7 @@ from pathlib import Path
 root_dir = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(root_dir))
 
-from delivery_mechanisms.web_ui.flask_adapter import FlaskWebAdapter
+from interfaces.web_ui.flask_adapter import FlaskWebAdapter
 
 
 def create_app():

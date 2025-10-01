@@ -54,7 +54,7 @@ def show_architecture():
 │       ├── web_app.py         # Aplicación Web
 │       └── multiplayer_server.py # Servidor multiplayer
 │
-├── 🔌 delivery_mechanisms/     # INTERFACES EXTERNAS
+├── 🔌 interfaces/             # INTERFACES EXTERNAS
 │   ├── web/                   # Interfaz web
 │   │   └── flask_adapter.py   # Adaptador Flask
 │   └── console/               # Interfaz consola
@@ -121,10 +121,10 @@ def run_linting():
     # Linting commands
     commands = [
         # Flake8 para estilo de código
-        "flake8 game/ application/ delivery_mechanisms/ persistence/ infrastructure/ --max-line-length=100 --ignore=E501,W503",
+        "flake8 game/ application/ interfaces/ persistence/ infrastructure/ --max-line-length=100 --ignore=E501,W503",
         
         # Black para formateo automático (dry-run)
-        "black --check --diff game/ application/ delivery_mechanisms/ persistence/ infrastructure/",
+        "black --check --diff game/ application/ interfaces/ persistence/ infrastructure/",
         
         # Mypy para type checking
         "mypy game/ application/ --ignore-missing-imports"

@@ -15,7 +15,7 @@ project_root = current_dir.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Importar después de configurar el PYTHONPATH
-from delivery_mechanisms.web_ui.flask_adapter import FlaskWebAdapter
+from interfaces.web_ui.flask_adapter import FlaskWebAdapter
 
 
 class TicTacToeWebApp:

@@ -16,7 +16,7 @@ sys.path.insert(0, str(project_root))
 
 # Importar después de configurar el PYTHONPATH
 try:
-    from delivery_mechanisms.web_ui.flask_adapter import FlaskWebAdapter
+    from interfaces.web_ui.flask_adapter import FlaskWebAdapter
 except ImportError as e:
     print(f"Error al importar FlaskWebAdapter: {e}")
     sys.exit(1)

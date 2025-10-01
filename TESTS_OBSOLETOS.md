@@ -3,7 +3,7 @@
 Los siguientes tests están desactualizados y NO deben ejecutarse:
 
 ## Tests Unitarios Desactualizados (tests/unit/)
-- `tests/unit/delivery_mechanisms/test_adapters.py` - API desactualizada
+- `tests/unit/interfaces/test_adapters.py` - API desactualizada
 - `tests/unit/game/test_entities.py` - Imports incorrectos  
 - `tests/unit/game/test_rules.py` - Clases inexistentes
 - `tests/unit/game/test_services.py` - Métodos obsoletos

@@ -76,11 +76,11 @@ class TestScreamingArchitectureCompliance(unittest.TestCase):
     
     def test_external_layers_depend_on_domain(self):
         """Verifica que las capas externas dependen del dominio."""
-        from delivery_mechanisms.web_ui.flask_adapter import FlaskWebAdapter
+        from interfaces.web_ui.flask_adapter import FlaskWebAdapter
         from application.entry_points.web_main import TicTacToeWebApp
         
         # Verificar que Flask adapter importa del dominio
-        flask_file = Path(self.project_root / 'delivery_mechanisms/web_ui/flask_adapter.py')
+        flask_file = Path(self.project_root / 'interfaces/web_ui/flask_adapter.py')
         with open(flask_file, 'r', encoding='utf-8') as f:
             content = f.read()
         

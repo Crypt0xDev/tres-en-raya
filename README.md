@@ -4,7 +4,7 @@
 
 ![Tres en Raya Logo](https://img.shields.io/badge/🎮-Tres%20en%20Raya-blue?style=for-the-badge)
 ![Screaming Architecture](https://img.shields.io/badge/🏗️-Screaming%20Architecture-brightgreen?style=for-the-badge)
-![Web App](https://img.shields.io/badge/🌐-Aplicaci%C3%B3n%20Web-success?style=for-the-badge)
+![Web App├── 🌐 interfaces/            # 🚚 ENTREGA - Interfaces(https://img.shields.io/badge/🌐-Aplicaci%C3%B3n%20Web-success?style=for-the-badge)
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/Crypt0xDev/tres-en-raya/test.yml?branch=main&label=Tests&style=flat-square)](https://github.com/Crypt0xDev/tres-en-raya/actions)
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=flat-square&logo=python)](https://www.python.org/)
@@ -45,7 +45,7 @@ Cuando miras la estructura del proyecto, **inmediatamente sabes que es un juego 
 │   └── rules/                       # ← ¡GRITA "REGLAS DEL JUEGO"!
 ├── 🎪 application/                   # Orquestación de la aplicación web
 │   └── entry_points/                # Punto de entrada web único
-├── 🌐 delivery_mechanisms/          # Adaptador web (Flask)
+├── 🌐 interfaces/                  # Adaptador web (Flask)
 │   └── web_ui/                     # Interfaz web moderna
 ├── 💾 persistence/                  # Persistencia de datos  
 ├── 🏗️ infrastructure/              # Configuración e infraestructura
@@ -145,7 +145,7 @@ tres-en-raya/                    # 🎯 ESTRUCTURA LIMPIA - SCREAMING ARCHITECTU
 │       ├── web_app.py        # 🌐 Aplicación Web
 │       └── multiplayer_server.py # 🌍 Servidor Multijugador
 │
-├── 🔌 delivery_mechanisms/     # ADAPTADORES DE INTERFAZ
+├── 🔌 interfaces/             # ADAPTADORES DE INTERFAZ
 │   ├── web_ui/               # Interfaz web
 │   │   └── flask_adapter.py  # Adaptador Flask
 │   └── console_ui/           # Interfaz consola
@@ -170,7 +170,7 @@ tres-en-raya/                    # 🎯 ESTRUCTURA LIMPIA - SCREAMING ARCHITECTU
 │
 └── 🧪 tests/                  # TESTS ARQUITECTÓNICOS
     ├── unit/game/            # Tests del dominio
-    ├── unit/delivery_mechanisms/ # Tests de adaptadores
+    ├── unit/interfaces/         # Tests de adaptadores
     ├── integration/          # Tests de integración
     └── e2e/                 # Tests end-to-end
 ```
@@ -449,7 +449,7 @@ MIT License - Libre para usar, modificar y distribuir ❤️
 │       ├── score_calculator.py       # 🏅 Calculador de puntuaciones
 │       └── statistics_tracker.py     # 📈 Rastreador estadísticas
 │
-├── 📁 delivery_mechanisms/           # 🚚 MECANISMOS DE ENTREGA (antes interfaces)
+├── 📁 interfaces/                   # 🚚 INTERFACES DE ENTREGA
 │   ├── 📁 web_ui/                   # 🌐 Interfaz Web
 │   │   ├── flask_app.py             # 🔗 Adaptador Flask
 │   │   ├── 📁 controllers/          # 🎛️ Controladores web
